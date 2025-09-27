@@ -1,6 +1,75 @@
 <!DOCTYPE html>
 <html>
+<head>
+    <title>elmotec.net</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            max-width: 800px;
+            margin: 50px 20px;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .header {
+            font-size: 24px;
+            margin-bottom: 30px;
+            color: #333;
+        }
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #444;
+            font-weight: bold;
+        }
+        .links {
+            margin-top: 20px;
+        }
+        .links a {
+            color: #0066cc;
+            text-decoration: none;
+            padding: 2px;
+        }
+        .links a:hover {
+            background-color: #e6f3ff;
+            text-decoration: underline;
+        }
+        .description {
+            font-style: italic;
+            color: #666;
+            margin-left: 20px;
+            font-size: 14px;
+        }
+
+        /* Dark mode */
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #1a1a1a;
+                color: #e0e0e0;
+            }
+            .header {
+                color: #e0e0e0;
+            }
+            .section-title {
+                color: #d0d0d0;
+            }
+            .links a {
+                color: #66b3ff;
+            }
+            .links a:hover {
+                background-color: #2a2a2a;
+            }
+            .description {
+                color: #999;
+            }
+        }
+    </style>
+</head>
 <body>
-<pre>elmotec.net</pre>
+    <div class="header">elmotec.net</div>
+    
+    <div class="links">
+        GDB threading cheat sheet: <a href="gdb-thread.pdf" target="_blank">pdf</a> | <a href="https://gist.github.com/elmotec/99635d10683789b4eb7be708a92ac91b" target="_blank">md</a>
+    </div>
 </body>
 </html>
