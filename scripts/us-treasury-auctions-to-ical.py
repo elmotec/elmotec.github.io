@@ -1,18 +1,21 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
+#     "click",
 #     "icalendar",
 #     "requests",
 # ]
 # ///
 
 import json
+import logging
 import subprocess
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+import click
 import requests
 from icalendar import Calendar, Event
 
@@ -30,7 +33,7 @@ def fetch_treasury_data() -> list[dict[str, Any]]:
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
-        print(f"Error fetching Treasury data: {e}", file=sys.stderr)
+        logging.error(f"Error fetching Treasury data: {e}")
         sys.exit(1)
 
 
@@ -39,24 +42,40 @@ def parse_date(date_str: str) -> datetime:
     return datetime.fromisoformat(date_str.replace("T00:00:00", ""))
 
 
+def filter_securities(
+    securities: list[dict[str, Any]], days_back: int
+) -> list[dict[str, Any]]:
+    """Filter out securities with auction dates earlier than days_back from now."""
+    cutoff_date = datetime.now() - timedelta(days=days_back)
+    filtered = []
+    for security in securities:
+        auction_date = parse_date(security["auctionDate"])
+        if auction_date >= cutoff_date:
+            filtered.append(security)
+    return filtered
+
+
 def create_announcement_event(security: dict[str, Any]) -> Event:
     """Create calendar event for auction announcement."""
     event = Event()
     
     announcement_date = parse_date(security["announcementDate"])
     event.add("uid", f"{security['cusip']}-announcement@treasurydirect.gov")
-    event.add("dtstamp", datetime.now())
+    event.add("dtstamp", datetime.utcnow())
     event.add("dtstart", announcement_date.date())
     
     summary = f"{security['securityTerm']} {security['securityType']} Auction Announced"
     event.add("summary", summary)
     
-    description = (
-        f"Auction Date: {security['auctionDate']}\n"
-        f"CUSIP: {security['cusip']}\n"
-        f"Offering Amount: ${security.get('offeringAmount', 'TBD')}"
-    )
-    event.add("description", description)
+    description_parts = [
+        f"Auction Date: {security['auctionDate']}",
+        f"CUSIP: {security['cusip']}",
+        f"Offering Amount: ${security.get('offeringAmount', 'TBD')}",
+    ]
+    if maturity_date := security.get("maturityDate"):
+        description_parts.append(f"Maturity Date: {maturity_date[:10]}")
+    
+    event.add("description", "\n".join(description_parts))
     
     event.add("categories", ["Treasury", "Announcement", security["securityType"]])
     
@@ -68,8 +87,9 @@ def create_auction_event(security: dict[str, Any]) -> Event:
     event = Event()
     
     auction_date = parse_date(security["auctionDate"])
+    announcement_date = parse_date(security["announcementDate"])
     event.add("uid", f"{security['cusip']}-auction@treasurydirect.gov")
-    event.add("dtstamp", datetime.now())
+    event.add("dtstamp", datetime.utcnow())
     event.add("dtstart", auction_date.date())
     
     summary = f"{security['securityTerm']} {security['securityType']} Auction"
@@ -113,7 +133,7 @@ def save_calendar(calendar: Calendar) -> None:
     """Save calendar to .ics file."""
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     OUTPUT_FILE.write_bytes(calendar.to_ical())
-    print(f"Calendar saved to {OUTPUT_FILE}")
+    logging.info(f"Calendar saved to {OUTPUT_FILE}")
 
 
 def run_git_command(command: list[str]) -> subprocess.CompletedProcess:
@@ -133,42 +153,73 @@ def commit_and_push() -> None:
     result = run_git_command(["git", "diff", "--cached", "--quiet", str(OUTPUT_FILE)])
     
     if result.returncode == 0:
-        print("No changes to commit")
+        logging.info("No changes to commit")
         return
     
     result = run_git_command([
         "git", "commit", "-m", "chore: update Treasury auction calendar"
     ])
     if result.returncode != 0:
-        print(f"Error committing changes: {result.stderr}", file=sys.stderr)
+        logging.error(f"Error committing changes: {result.stderr}")
         sys.exit(1)
     
-    print("Changes committed")
+    logging.info("Changes committed")
     
     result = run_git_command(["git", "push", "origin", "main"])
     if result.returncode != 0:
-        print(f"Error pushing changes: {result.stderr}", file=sys.stderr)
+        logging.error(f"Error pushing changes: {result.stderr}")
         sys.exit(1)
     
-    print("Changes pushed to remote")
+    logging.info("Changes pushed to remote")
 
 
-def main() -> None:
+def main(commit: bool, days_back: int) -> None:
     """Main execution flow."""
-    print("Fetching Treasury auction data...")
-    securities = fetch_treasury_data()
-    print(f"Found {len(securities)} announced securities")
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     
-    print("Generating calendar...")
+    logging.info("Fetching Treasury auction data...")
+    securities = fetch_treasury_data()
+    logging.info(f"Found {len(securities)} announced securities")
+    
+    logging.info(f"Filtering securities with auction dates in last {days_back} days...")
+    securities = filter_securities(securities, days_back)
+    logging.info(f"After filtering: {len(securities)} securities")
+    
+    logging.info("Generating calendar...")
     calendar = generate_calendar(securities)
     
     save_calendar(calendar)
     
-    print("Committing and pushing changes...")
-    commit_and_push()
+    if commit:
+        logging.info("Committing and pushing changes...")
+        commit_and_push()
+    else:
+        logging.info("Skipping commit (use --commit to enable)")
     
-    print("Done!")
+    logging.info("Done!")
+
+
+@click.command()
+@click.option(
+    "-c",
+    "--commit",
+    is_flag=True,
+    default=False,
+    help="Commit and push changes to git",
+)
+@click.option(
+    "--days-back",
+    type=int,
+    default=7,
+    help="Include auctions from the last N days (default: 7)",
+)
+def cli(commit: bool, days_back: int) -> None:
+    """Download Treasury auction data and generate iCalendar file."""
+    main(commit, days_back)
 
 
 if __name__ == "__main__":
-    main()
+    cli()
