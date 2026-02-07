@@ -116,15 +116,17 @@ def create_auction_event(security: dict[str, Any]) -> Event:
     return event
 
 
-def generate_calendar(securities: list[dict[str, Any]]) -> Calendar:
+def generate_calendar(securities: list[dict[str, Any]], event_types: list[str]) -> Calendar:
     """Generate iCalendar object from Treasury securities data."""
     calendar = Calendar()
     calendar.add("prodid", "-//Treasury Auction Calendar//elmotec.github.io//")
     calendar.add("version", "2.0")
     
     for security in securities:
-        calendar.add_component(create_announcement_event(security))
-        calendar.add_component(create_auction_event(security))
+        if "announcement" in event_types:
+            calendar.add_component(create_announcement_event(security))
+        if "auction" in event_types:
+            calendar.add_component(create_auction_event(security))
     
     return calendar
 
@@ -173,7 +175,7 @@ def commit_and_push() -> None:
     logging.info("Changes pushed to remote")
 
 
-def main(commit: bool, days_back: int) -> None:
+def main(commit: bool, days_back: int, event_types: list[str]) -> None:
     """Main execution flow."""
     logging.basicConfig(
         level=logging.INFO,
@@ -189,7 +191,7 @@ def main(commit: bool, days_back: int) -> None:
     logging.info(f"After filtering: {len(securities)} securities")
     
     logging.info("Generating calendar...")
-    calendar = generate_calendar(securities)
+    calendar = generate_calendar(securities, event_types)
     
     save_calendar(calendar)
     
@@ -216,9 +218,17 @@ def main(commit: bool, days_back: int) -> None:
     default=7,
     help="Include auctions from the last N days (default: 7)",
 )
-def cli(commit: bool, days_back: int) -> None:
-    """Download Treasury auction data and generate iCalendar file."""
-    main(commit, days_back)
+@click.option(
+    "--event-type",
+    "event_types",
+    type=click.Choice(["announcement", "auction"], case_sensitive=False),    
+    default=["auction"],
+    multiple=True,
+    help="Type of events to include in calendar (default: auction)",
+)
+def cli(commit: bool, days_back: int, event_types: list[str]) -> None:
+    """Download Treasury auction data and generate iCalendar file."""    
+    main(commit, days_back, event_types)
 
 
 if __name__ == "__main__":
