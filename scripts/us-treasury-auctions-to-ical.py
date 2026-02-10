@@ -89,7 +89,6 @@ def create_auction_event(security: dict[str, Any]) -> Event:
     auction_date = parse_date(security["auctionDate"])
     announcement_date = parse_date(security["announcementDate"])
     event.add("uid", f"{security['cusip']}-auction@treasurydirect.gov")
-    event.add("dtstamp", datetime.utcnow())
     event.add("dtstart", auction_date.date())
     
     summary = f"{security['securityTerm']} {security['securityType']} Auction"
