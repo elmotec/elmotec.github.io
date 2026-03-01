@@ -147,14 +147,22 @@ def run_git_command(command: list[str]) -> subprocess.CompletedProcess:
     )
 
 
+def has_new_lines_to_commit(output: str) -> bool:
+    """Check if there are changes to commit."""
+    for line in output.splitlines():
+        if line.startswith("+") and not line.startswith("+++"):
+            return True
+    return False
+    
+
 def commit_and_push() -> None:
     """Commit calendar file to git and push to remote."""
     run_git_command(["git", "add", str(OUTPUT_FILE)])
     
-    result = run_git_command(["git", "diff", "--cached", "--quiet", str(OUTPUT_FILE)])
+    result = run_git_command(["git", "diff", "--cached", str(OUTPUT_FILE)])
     
-    if result.returncode == 0:
-        logging.info("No changes to commit")
+    if not has_new_lines_to_commit(result.stdout):
+        logging.info("No new lines to commit")
         return
     
     result = run_git_command([
