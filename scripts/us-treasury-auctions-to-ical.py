@@ -11,7 +11,7 @@ import json
 import logging
 import subprocess
 import sys
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
@@ -61,7 +61,7 @@ def create_announcement_event(security: dict[str, Any]) -> Event:
 
     announcement_date = parse_date(security["announcementDate"])
     event.add("uid", f"{security['cusip']}-announcement@treasurydirect.gov")
-    event.add("dtstamp", datetime.utcnow())
+    event.add("dtstamp", datetime.now(UTC))
     event.add("dtstart", announcement_date.date())
 
     summary = f"{security['securityTerm']} {security['securityType']} Auction Announced"
@@ -89,6 +89,7 @@ def create_auction_event(security: dict[str, Any]) -> Event:
     auction_date = parse_date(security["auctionDate"])
     announcement_date = parse_date(security["announcementDate"])
     event.add("uid", f"{security['cusip']}-auction@treasurydirect.gov")
+    event.add("dtstamp", datetime.now(UTC))
     event.add("dtstart", auction_date.date())
 
     summary = f"{security['securityTerm']} {security['securityType']} Auction"
