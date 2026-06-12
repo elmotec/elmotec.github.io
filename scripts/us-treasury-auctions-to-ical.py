@@ -46,10 +46,10 @@ def filter_securities(
     securities: list[dict[str, Any]], days_back: int
 ) -> list[dict[str, Any]]:
     """Filter out securities with auction dates earlier than days_back from now."""
-    cutoff_date = datetime.now() - timedelta(days=days_back)
+    cutoff_date = (datetime.now() - timedelta(days=days_back)).date()
     filtered = []
     for security in securities:
-        auction_date = parse_date(security["auctionDate"])
+        auction_date = parse_date(security["auctionDate"]).date()
         if auction_date >= cutoff_date:
             filtered.append(security)
     return filtered
@@ -148,10 +148,13 @@ def run_git_command(command: list[str]) -> subprocess.CompletedProcess:
     )
 
 
-def has_new_lines_to_commit(output: str) -> bool:
+def has_changes_to_commit(output: str) -> bool:
     """Check if there are changes to commit."""
     for line in output.splitlines():
-        if line.startswith("+") and not line.startswith("+++"):
+        if (
+            line.startswith(("+", "-"))
+            and not line.startswith(("+++", "---"))
+        ):
             return True
     return False
 
@@ -162,8 +165,8 @@ def commit_and_push() -> None:
 
     result = run_git_command(["git", "diff", "--cached", str(OUTPUT_FILE)])
 
-    if not has_new_lines_to_commit(result.stdout):
-        logging.info("No new lines to commit")
+    if not has_changes_to_commit(result.stdout):
+        logging.info("No changes to commit")
         return
 
     result = run_git_command([
