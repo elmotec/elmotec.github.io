@@ -161,7 +161,10 @@ def has_changes_to_commit(output: str) -> bool:
 
 def commit_and_push() -> None:
     """Commit calendar file to git and push to remote."""
-    run_git_command(["git", "add", str(OUTPUT_FILE)])
+    result = run_git_command(["git", "add", str(OUTPUT_FILE)])
+    if result.returncode != 0:
+        logging.error(f"Error staging changes: {result.stderr}")
+        sys.exit(1)
 
     result = run_git_command(["git", "diff", "--cached", str(OUTPUT_FILE)])
 

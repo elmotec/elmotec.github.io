@@ -10,6 +10,7 @@
 # ///
 
 import importlib.util
+import subprocess
 from datetime import date, datetime, timedelta
 from pathlib import Path
 from types import ModuleType
@@ -202,6 +203,30 @@ def test_has_changes_to_commit(
     expected: bool,
 ) -> None:
     assert treasury_module.has_changes_to_commit(diff) is expected
+
+
+def test_commit_and_push_exits_when_git_add_fails(
+    treasury_module: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    git_add_failure = subprocess.CompletedProcess(
+        args=["git", "add"],
+        returncode=1,
+        stdout="",
+        stderr="cannot update index",
+    )
+    run_git_command = Mock(return_value=git_add_failure)
+    monkeypatch.setattr(treasury_module, "run_git_command", run_git_command)
+
+    with pytest.raises(SystemExit) as exc_info:
+        treasury_module.commit_and_push()
+
+    assert exc_info.value.code == 1
+    run_git_command.assert_called_once_with([
+        "git",
+        "add",
+        str(treasury_module.OUTPUT_FILE),
+    ])
 
 
 if __name__ == "__main__":
