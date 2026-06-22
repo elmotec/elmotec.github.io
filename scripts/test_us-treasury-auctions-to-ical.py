@@ -59,12 +59,10 @@ def test_create_auction_event_has_required_fields(
 
     assert event["uid"] == "912797TEST-auction@treasurydirect.gov"
     assert event.decoded("dtstart") == date(2026, 6, 18)
-    assert event.decoded("dtstamp").utcoffset() == timedelta(0)
     assert event["summary"] == "4-Week Bill Auction"
 
     serialized = event.to_ical().decode()
-    assert "DTSTAMP:" in serialized
-    assert "DTSTAMP:" + event.decoded("dtstamp").strftime("%Y%m%dT%H%M%SZ") in serialized
+    assert "DTSTAMP:" not in serialized
     assert "Competitive Closing: 11:30 AM" in event["description"]
     assert "Non-Competitive Closing: 11:00 AM" in event["description"]
     assert "Issue Date: 2026-06-23T00:00:00" in event["description"]
@@ -79,8 +77,9 @@ def test_create_announcement_event_has_required_fields(
 
     assert event["uid"] == "912797TEST-announcement@treasurydirect.gov"
     assert event.decoded("dtstart") == date(2026, 6, 11)
-    assert event.decoded("dtstamp").utcoffset() == timedelta(0)
     assert event["summary"] == "4-Week Bill Auction Announced"
+    serialized = event.to_ical().decode()
+    assert "DTSTAMP:" not in serialized
     assert "Auction Date: 2026-06-18T00:00:00" in event["description"]
     assert "Maturity Date: 2026-07-21" in event["description"]
 
