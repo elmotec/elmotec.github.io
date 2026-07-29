@@ -137,13 +137,4 @@ DESCRIPTION:CUSIP: 912810UV8\nSecurity Term: 19-Year 10-Month\nOffering Am
  : 12:00 PM\nIssue Date: 2026-07-24T00:00:00\nMaturity Date: 2046-05-15T00:
  00:00
 END:VEVENT
-BEGIN:VEVENT
-SUMMARY:6-Week Bill Auction
-DTSTART;VALUE=DATE:20260721
-UID:912797RS8-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797RS8\nSecurity Term: 6-Week\nOffering Amount: $950
- 00000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 AM
- \nIssue Date: 2026-07-23T00:00:00\nMaturity Date: 2026-09-03T00:00:00
-END:VEVENT
 END:VCALENDAR
