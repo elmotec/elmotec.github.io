@@ -1,361 +1,430 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>U.S. Treasury Auction Calendar (iCal) | elmotec.net</title>
-    <meta name="description" content="Subscribe to a TreasuryDirect auction calendar in iCal/ICS format with announced dates for U.S. Treasury bills, notes, bonds, TIPS, and FRNs.">
-    <link rel="canonical" href="https://elmotec.net/treasurydirect-auctions-ical/">
-    <link rel="alternate" type="text/calendar" title="U.S. Treasury Auction Calendar" href="https://elmotec.net/scripts/output/treasury-auctions.ics">
-    <meta property="og:title" content="U.S. Treasury Auction Calendar (iCal)">
-    <meta property="og:description" content="A subscribable calendar of U.S. Treasury security auction dates, sourced from TreasuryDirect.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://elmotec.net/treasurydirect-auctions-ical/">
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Dataset",
-            "name": "U.S. Treasury Auction Calendar",
-            "description": "A subscribable iCal calendar of announced U.S. Treasury security auction dates.",
-            "url": "https://elmotec.net/treasurydirect-auctions-ical/",
-            "isAccessibleForFree": true,
-            "keywords": [
-                "Treasury auction calendar",
-                "TreasuryDirect",
-                "iCal",
-                "ICS",
-                "Treasury bills",
-                "Treasury notes",
-                "Treasury bonds",
-                "TIPS",
-                "FRNs"
-            ],
-            "isBasedOn": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
-            "distribution": {
-                "@type": "DataDownload",
-                "encodingFormat": "text/calendar",
-                "contentUrl": "https://elmotec.net/scripts/output/treasury-auctions.ics"
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>U.S. Treasury Auction Calendar (iCal) | elmotec.net</title>
+        <meta
+            name="description"
+            content="Subscribe to a TreasuryDirect auction calendar in iCal/ICS format with announced dates for U.S. Treasury bills, notes, bonds, TIPS, and FRNs."
+        />
+        <link rel="canonical" href="https://elmotec.net/treasurydirect-auctions-ical/" />
+        <link
+            rel="alternate"
+            type="text/calendar"
+            title="U.S. Treasury Auction Calendar"
+            href="https://elmotec.net/scripts/output/treasury-auctions.ics"
+        />
+        <meta property="og:title" content="U.S. Treasury Auction Calendar (iCal)" />
+        <meta
+            property="og:description"
+            content="A subscribable calendar of U.S. Treasury security auction dates, sourced from TreasuryDirect."
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://elmotec.net/treasurydirect-auctions-ical/" />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "Dataset",
+                "name": "U.S. Treasury Auction Calendar",
+                "description": "A subscribable iCal calendar of announced U.S. Treasury security auction dates.",
+                "url": "https://elmotec.net/treasurydirect-auctions-ical/",
+                "isAccessibleForFree": true,
+                "keywords": [
+                    "Treasury auction calendar",
+                    "TreasuryDirect",
+                    "iCal",
+                    "ICS",
+                    "Treasury bills",
+                    "Treasury notes",
+                    "Treasury bonds",
+                    "TIPS",
+                    "FRNs"
+                ],
+                "isBasedOn": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+                "distribution": {
+                    "@type": "DataDownload",
+                    "encodingFormat": "text/calendar",
+                    "contentUrl": "https://elmotec.net/scripts/output/treasury-auctions.ics"
+                }
             }
-        }
-    </script>
-    <style>
-        :root {
-            color-scheme: light dark;
-            --blue: #0379ca;
-            --link-hover: #024c7f;
-            --yellow: #ffd800;
-            --yellow-light: #fffbe6;
-            --ink: #2e2e2e;
-            --muted: #777;
-            --border: #777;
-            --surface: #f3f3f3;
-            --white: #fff;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            color: var(--ink);
-            background: var(--white);
-            font-family: "Public Sans", "Helvetica Neue", Arial, sans-serif;
-            font-size: 16px;
-            line-height: 1.5;
-        }
-
-        a {
-            color: var(--blue);
-            text-decoration-thickness: 1px;
-            text-underline-offset: 3px;
-        }
-
-        a:hover {
-            color: var(--link-hover);
-            text-decoration-thickness: 2px;
-        }
-
-        a:focus-visible,
-        button:focus-visible {
-            outline: 3px solid var(--yellow);
-            outline-offset: 3px;
-        }
-
-        main {
-            width: min(100% - 40px, 1040px);
-            margin-inline: auto;
-        }
-
-        main {
-            padding-block: 24px 72px;
-        }
-
-        .breadcrumb {
-            margin: 0 0 40px;
-            color: var(--muted);
-            font-size: 15px;
-        }
-
-        h1,
-        h2 {
-            color: var(--ink);
-            line-height: 1.2;
-        }
-
-        h1 {
-            max-width: 800px;
-            margin: 0 0 20px;
-            font-size: clamp(36px, 6vw, 48px);
-        }
-
-        h2 {
-            margin: 52px 0 16px;
-            font-size: 29px;
-        }
-
-        .lede {
-            max-width: 780px;
-            margin: 0 0 32px;
-            color: var(--ink);
-            font-size: 20px;
-            line-height: 1.5;
-        }
-
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin: 28px 0 20px;
-        }
-
-        .button {
-            display: inline-block;
-            border: 2px solid var(--blue);
-            border-radius: 6px;
-            padding: 11px 20px;
-            background: var(--blue);
-            color: var(--white);
-            font-weight: 700;
-            text-decoration: none;
-        }
-
-        .button:hover {
-            border-color: var(--link-hover);
-            background: var(--link-hover);
-            color: var(--white);
-        }
-
-        .button.secondary {
-            background: var(--white);
-            color: var(--blue);
-        }
-
-        .button.secondary:hover {
-            background: #e7f3fa;
-            color: var(--link-hover);
-        }
-
-        .url-panel {
-            max-width: 800px;
-            border: 2px solid var(--yellow);
-            padding: 18px 20px;
-            background: var(--yellow-light);
-        }
-
-        .url-panel strong {
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .url-row {
-            display: flex;
-            gap: 8px;
-        }
-
-        .url-row input {
-            min-width: 0;
-            flex: 1;
-            border: 1px solid #71767a;
-            border-radius: 0;
-            padding: 9px 11px;
-            background: var(--white);
-            color: var(--ink);
-            font: 14px/1.4 ui-monospace, SFMono-Regular, Consolas, monospace;
-        }
-
-        .copy-button {
-            border: 2px solid var(--blue);
-            border-radius: 6px;
-            padding: 7px 14px;
-            background: var(--white);
-            color: var(--blue);
-            font: inherit;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        .copy-button:hover {
-            background: #e7f3fa;
-        }
-
-        .content-grid {
-            display: grid;
-            grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
-            gap: 64px;
-            align-items: start;
-        }
-
-        .content-grid h2:first-child {
-            margin-top: 52px;
-        }
-
-        .detail-list {
-            padding-left: 24px;
-        }
-
-        .detail-list li + li {
-            margin-top: 9px;
-        }
-
-        .source-card {
-            margin-top: 52px;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            border-left: 8px solid var(--blue);
-            padding: 18px 22px;
-            background: var(--white);
-            font-size: 16px;
-        }
-
-        .source-card h2 {
-            margin: 0 0 12px;
-            font-size: 24px;
-        }
-
-        .source-card p:last-child {
-            margin-bottom: 0;
-        }
-
-        .note {
-            color: var(--muted);
-            font-size: 16px;
-        }
-
-        @media (prefers-color-scheme: dark) {
+        </script>
+        <style>
             :root {
-                --blue: #58b4f5;
-                --link-hover: #9bd3fa;
-                --yellow: #e6c200;
-                --yellow-light: #343117;
-                --ink: #f0f0f0;
-                --muted: #b8b8b8;
-                --border: #999;
-                --surface: #252525;
-                --white: #171717;
+                color-scheme: light dark;
+                --blue: #0379ca;
+                --link-hover: #024c7f;
+                --yellow: #ffd800;
+                --yellow-light: #fffbe6;
+                --ink: #2e2e2e;
+                --muted: #777;
+                --border: #777;
+                --surface: #f3f3f3;
+                --white: #fff;
             }
 
-            .button.secondary:hover,
-            .copy-button:hover {
-                background: #243b4a;
+            * {
+                box-sizing: border-box;
             }
-        }
 
-        @media (max-width: 720px) {
-            .content-grid {
+            body {
+                margin: 0;
+                color: var(--ink);
+                background: var(--white);
+                font-family: "Public Sans", "Helvetica Neue", Arial, sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+            }
+
+            a {
+                color: var(--blue);
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+            }
+
+            a:hover {
+                color: var(--link-hover);
+                text-decoration-thickness: 2px;
+            }
+
+            a:focus-visible,
+            button:focus-visible {
+                outline: 3px solid var(--yellow);
+                outline-offset: 3px;
+            }
+
+            main {
+                width: min(100% - 40px, 1040px);
+                margin-inline: auto;
+            }
+
+            main {
+                padding-block: 24px 72px;
+            }
+
+            .breadcrumb {
+                margin: 0 0 40px;
+                color: var(--muted);
+                font-size: 15px;
+            }
+
+            h1,
+            h2 {
+                color: var(--ink);
+                line-height: 1.2;
+            }
+
+            h1 {
+                max-width: 800px;
+                margin: 0 0 20px;
+                font-size: clamp(36px, 6vw, 48px);
+            }
+
+            h2 {
+                margin: 52px 0 16px;
+                font-size: 29px;
+            }
+
+            .lede {
+                max-width: 780px;
+                margin: 0 0 32px;
+                color: var(--ink);
+                font-size: 20px;
+                line-height: 1.5;
+            }
+
+            .actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                margin: 28px 0 20px;
+            }
+
+            .button {
+                display: inline-block;
+                border: 2px solid var(--blue);
+                border-radius: 6px;
+                padding: 11px 20px;
+                background: var(--blue);
+                color: var(--white);
+                font-weight: 700;
+                text-decoration: none;
+            }
+
+            .button:hover {
+                border-color: var(--link-hover);
+                background: var(--link-hover);
+                color: var(--white);
+            }
+
+            .button.secondary {
+                background: var(--white);
+                color: var(--blue);
+            }
+
+            .button.secondary:hover {
+                background: #e7f3fa;
+                color: var(--link-hover);
+            }
+
+            .url-panel {
+                max-width: 800px;
+                border: 2px solid var(--yellow);
+                padding: 18px 20px;
+                background: var(--yellow-light);
+            }
+
+            .url-panel strong {
                 display: block;
+                margin-bottom: 8px;
             }
 
             .url-row {
-                display: block;
+                display: flex;
+                gap: 8px;
             }
 
             .url-row input {
-                width: 100%;
+                min-width: 0;
+                flex: 1;
+                border: 1px solid #71767a;
+                border-radius: 0;
+                padding: 9px 11px;
+                background: var(--white);
+                color: var(--ink);
+                font:
+                    14px/1.4 ui-monospace,
+                    SFMono-Regular,
+                    Consolas,
+                    monospace;
             }
 
             .copy-button {
-                width: 100%;
-                margin-top: 8px;
+                border: 2px solid var(--blue);
+                border-radius: 6px;
+                padding: 7px 14px;
+                background: var(--white);
+                color: var(--blue);
+                font: inherit;
+                font-size: 16px;
+                font-weight: 700;
+                cursor: pointer;
             }
-        }
 
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                scroll-behavior: auto !important;
+            .copy-button:hover {
+                background: #e7f3fa;
             }
-        }
-    </style>
-</head>
-<body>
-    <main id="main-content">
-        <p class="breadcrumb"><a href="/">Home</a> &nbsp;/&nbsp; U.S. Treasury auction calendar</p>
 
-        <h1>U.S. Treasury auction calendar</h1>
-        <p class="lede">Treasury regularly auctions bills, notes, bonds, Floating Rate Notes (FRNs), and Treasury Inflation-Protected Securities (TIPS). Follow the announced auction dates in the calendar app you already use.</p>
+            .content-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+                gap: 64px;
+                align-items: start;
+            }
 
-        <div class="actions">
-            <a class="button" href="webcal://elmotec.net/scripts/output/treasury-auctions.ics">Subscribe to the calendar</a>
-            <a class="button secondary" href="/scripts/output/treasury-auctions.ics" download>Download .ics file</a>
-        </div>
-        <p class="note">Subscribing keeps the calendar connected to future updates. Downloading imports a one-time snapshot.</p>
+            .content-grid h2:first-child {
+                margin-top: 52px;
+            }
 
-        <div class="url-panel">
-            <strong>Calendar subscription URL</strong>
-            <div class="url-row">
-                <input id="calendar-url" type="text" readonly value="https://elmotec.net/scripts/output/treasury-auctions.ics" aria-label="Calendar subscription URL">
-                <button class="copy-button" type="button" data-copy-url>Copy URL</button>
+            .detail-list {
+                padding-left: 24px;
+            }
+
+            .detail-list li + li {
+                margin-top: 9px;
+            }
+
+            .source-card {
+                margin-top: 52px;
+                border-top: 1px solid var(--border);
+                border-bottom: 1px solid var(--border);
+                border-left: 8px solid var(--blue);
+                padding: 18px 22px;
+                background: var(--white);
+                font-size: 16px;
+            }
+
+            .source-card h2 {
+                margin: 0 0 12px;
+                font-size: 24px;
+            }
+
+            .source-card p:last-child {
+                margin-bottom: 0;
+            }
+
+            .note {
+                color: var(--muted);
+                font-size: 16px;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --blue: #58b4f5;
+                    --link-hover: #9bd3fa;
+                    --yellow: #e6c200;
+                    --yellow-light: #343117;
+                    --ink: #f0f0f0;
+                    --muted: #b8b8b8;
+                    --border: #999;
+                    --surface: #252525;
+                    --white: #171717;
+                }
+
+                .button.secondary:hover,
+                .copy-button:hover {
+                    background: #243b4a;
+                }
+            }
+
+            @media (max-width: 720px) {
+                .content-grid {
+                    display: block;
+                }
+
+                .url-row {
+                    display: block;
+                }
+
+                .url-row input {
+                    width: 100%;
+                }
+
+                .copy-button {
+                    width: 100%;
+                    margin-top: 8px;
+                }
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                *,
+                *::before,
+                *::after {
+                    scroll-behavior: auto !important;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main id="main-content">
+            <p class="breadcrumb">
+                <a href="/">Home</a> &nbsp;/&nbsp; U.S. Treasury auction calendar
+            </p>
+
+            <h1>U.S. Treasury auction calendar</h1>
+            <p class="lede">
+                Treasury regularly auctions bills, notes, bonds, Floating Rate Notes (FRNs), and
+                Treasury Inflation-Protected Securities (TIPS). Follow the announced auction dates
+                in the calendar app you already use.
+            </p>
+
+            <div class="actions">
+                <a class="button" href="webcal://elmotec.net/scripts/output/treasury-auctions.ics"
+                    >Subscribe to the calendar</a
+                >
+                <a class="button secondary" href="/scripts/output/treasury-auctions.ics" download
+                    >Download .ics file</a
+                >
             </div>
-            <span id="copy-status" class="note" role="status" aria-live="polite"></span>
-        </div>
+            <p class="note">
+                Subscribing keeps the calendar connected to future updates. Downloading imports a
+                one-time snapshot.
+            </p>
 
-        <div class="content-grid">
-            <div>
-                <section aria-labelledby="included-heading">
-                    <h2 id="included-heading">What the calendar includes</h2>
-                    <p>The calendar lists auction dates for marketable Treasury securities published in TreasuryDirect’s announced securities data.</p>
-                    <p>Each all-day calendar event includes the security term and type, CUSIP, offering amount, competitive and noncompetitive closing times, issue date, and maturity date when supplied by TreasuryDirect.</p>
-                </section>
-
-                <section aria-labelledby="add-heading">
-                    <h2 id="add-heading">Add it to your calendar</h2>
-                    <ol class="detail-list">
-                        <li><strong>Apple Calendar:</strong> Select “Subscribe to the calendar” above and confirm the subscription.</li>
-                        <li><strong>Google Calendar:</strong> Open Settings, choose “Add calendar,” then “From URL,” and paste the subscription URL.</li>
-                        <li><strong>Outlook:</strong> Choose “Add calendar,” then “Subscribe from web,” and paste the subscription URL.</li>
-                    </ol>
-                    <p class="note">Calendar apps refresh subscribed calendars on their own schedules, so a newly announced or changed auction may not appear immediately.</p>
-                </section>
+            <div class="url-panel">
+                <strong>Calendar subscription URL</strong>
+                <div class="url-row">
+                    <input
+                        id="calendar-url"
+                        type="text"
+                        readonly
+                        value="https://elmotec.net/scripts/output/treasury-auctions.ics"
+                        aria-label="Calendar subscription URL"
+                    />
+                    <button class="copy-button" type="button" data-copy-url>Copy URL</button>
+                </div>
+                <span id="copy-status" class="note" role="status" aria-live="polite"></span>
             </div>
 
-            <aside class="source-card" aria-labelledby="source-heading">
-                <h2 id="source-heading">TreasuryDirect resources</h2>
-                <p>Calendar data comes from announced securities published by the U.S. Department of the Treasury through TreasuryDirect.</p>
-                <p><a href="https://www.treasurydirect.gov/auctions/announcements-data-results/">Announcements, Data &amp; Results</a></p>
-                <p><a href="https://www.treasurydirect.gov/auctions/upcoming/">Upcoming Auctions</a></p>
-                <p class="note">This independent calendar is not affiliated with or endorsed by the U.S. Department of the Treasury. Always refer to the official auction announcement before making financial decisions.</p>
-            </aside>
-        </div>
-    </main>
+            <div class="content-grid">
+                <div>
+                    <section aria-labelledby="included-heading">
+                        <h2 id="included-heading">What the calendar includes</h2>
+                        <p>
+                            The calendar lists auction dates for marketable Treasury securities
+                            published in TreasuryDirect’s announced securities data.
+                        </p>
+                        <p>
+                            Each all-day calendar event includes the security term and type, CUSIP,
+                            offering amount, competitive and noncompetitive closing times, issue
+                            date, and maturity date when supplied by TreasuryDirect.
+                        </p>
+                    </section>
 
-    <script>
-        const copyButton = document.querySelector("[data-copy-url]");
-        const calendarUrl = document.querySelector("#calendar-url");
-        const copyStatus = document.querySelector("#copy-status");
+                    <section aria-labelledby="add-heading">
+                        <h2 id="add-heading">Add it to your calendar</h2>
+                        <ol class="detail-list">
+                            <li>
+                                <strong>Apple Calendar:</strong> Select “Subscribe to the calendar”
+                                above and confirm the subscription.
+                            </li>
+                            <li>
+                                <strong>Google Calendar:</strong> Open Settings, choose “Add
+                                calendar,” then “From URL,” and paste the subscription URL.
+                            </li>
+                            <li>
+                                <strong>Outlook:</strong> Choose “Add calendar,” then “Subscribe
+                                from web,” and paste the subscription URL.
+                            </li>
+                        </ol>
+                        <p class="note">
+                            Calendar apps refresh subscribed calendars on their own schedules, so a
+                            newly announced or changed auction may not appear immediately.
+                        </p>
+                    </section>
+                </div>
 
-        copyButton.addEventListener("click", async () => {
-            try {
-                await navigator.clipboard.writeText(calendarUrl.value);
-                copyButton.textContent = "Copied";
-                copyStatus.textContent = " Calendar URL copied to clipboard.";
-            } catch (error) {
-                calendarUrl.select();
-                copyStatus.textContent = " Copy the selected URL.";
-            }
-        });
-    </script>
-</body>
+                <aside class="source-card" aria-labelledby="source-heading">
+                    <h2 id="source-heading">TreasuryDirect resources</h2>
+                    <p>
+                        Calendar data comes from announced securities published by the U.S.
+                        Department of the Treasury through TreasuryDirect.
+                    </p>
+                    <p>
+                        <a
+                            href="https://www.treasurydirect.gov/auctions/announcements-data-results/"
+                            >Announcements, Data &amp; Results</a
+                        >
+                    </p>
+                    <p>
+                        <a href="https://www.treasurydirect.gov/auctions/upcoming/"
+                            >Upcoming Auctions</a
+                        >
+                    </p>
+                    <p class="note">
+                        This independent calendar is not affiliated with or endorsed by the U.S.
+                        Department of the Treasury. Always refer to the official auction
+                        announcement before making financial decisions.
+                    </p>
+                </aside>
+            </div>
+        </main>
+
+        <script>
+            const copyButton = document.querySelector("[data-copy-url]");
+            const calendarUrl = document.querySelector("#calendar-url");
+            const copyStatus = document.querySelector("#copy-status");
+
+            copyButton.addEventListener("click", async () => {
+                try {
+                    await navigator.clipboard.writeText(calendarUrl.value);
+                    copyButton.textContent = "Copied";
+                    copyStatus.textContent = " Calendar URL copied to clipboard.";
+                } catch (error) {
+                    calendarUrl.select();
+                    copyStatus.textContent = " Copy the selected URL.";
+                }
+            });
+        </script>
+    </body>
 </html>

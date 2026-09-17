@@ -238,13 +238,13 @@ def main(commit: bool, days_back: int, event_types: list[str]) -> None:
 @click.option(
     "--event-type",
     "event_types",
-    type=click.Choice(["announcement", "auction"], case_sensitive=False),    
+    type=click.Choice(["announcement", "auction"], case_sensitive=False),
     default=["auction"],
     multiple=True,
     help="Type of events to include in calendar (default: auction)",
 )
 def cli(commit: bool, days_back: int, event_types: list[str]) -> None:
-    """Download Treasury auction data and generate iCalendar file."""    
+    """Download Treasury auction data and generate iCalendar file."""
     main(commit, days_back, event_types)
 
 
