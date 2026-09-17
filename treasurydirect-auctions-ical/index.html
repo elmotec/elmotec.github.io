@@ -4,12 +4,40 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>U.S. Treasury Auction Calendar (iCal) | elmotec.net</title>
-    <meta name="description" content="Subscribe to U.S. Treasury security auction dates in Apple Calendar, Google Calendar, Outlook, or another calendar app.">
+    <meta name="description" content="Subscribe to a TreasuryDirect auction calendar in iCal/ICS format with announced dates for U.S. Treasury bills, notes, bonds, TIPS, and FRNs.">
     <link rel="canonical" href="https://elmotec.net/treasurydirect-auctions-ical/">
+    <link rel="alternate" type="text/calendar" title="U.S. Treasury Auction Calendar" href="https://elmotec.net/scripts/output/treasury-auctions.ics">
     <meta property="og:title" content="U.S. Treasury Auction Calendar (iCal)">
     <meta property="og:description" content="A subscribable calendar of U.S. Treasury security auction dates, sourced from TreasuryDirect.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://elmotec.net/treasurydirect-auctions-ical/">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Dataset",
+            "name": "U.S. Treasury Auction Calendar",
+            "description": "A subscribable iCal calendar of announced U.S. Treasury security auction dates.",
+            "url": "https://elmotec.net/treasurydirect-auctions-ical/",
+            "isAccessibleForFree": true,
+            "keywords": [
+                "Treasury auction calendar",
+                "TreasuryDirect",
+                "iCal",
+                "ICS",
+                "Treasury bills",
+                "Treasury notes",
+                "Treasury bonds",
+                "TIPS",
+                "FRNs"
+            ],
+            "isBasedOn": "https://www.treasurydirect.gov/auctions/announcements-data-results/",
+            "distribution": {
+                "@type": "DataDownload",
+                "encodingFormat": "text/calendar",
+                "contentUrl": "https://elmotec.net/scripts/output/treasury-auctions.ics"
+            }
+        }
+    </script>
     <style>
         :root {
             color-scheme: light dark;
