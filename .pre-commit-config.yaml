@@ -1,0 +1,30 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-case-conflict
+      - id: check-executables-have-shebangs
+      - id: check-json
+      - id: check-merge-conflict
+      - id: check-xml
+      - id: check-yaml
+      - id: debug-statements
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: ^scripts/output/
+      - id: fix-byte-order-marker
+      - id: trailing-whitespace
+        exclude: ^scripts/output/
+
+  - repo: https://github.com/rbubley/mirrors-prettier
+    rev: v3.9.7
+    hooks:
+      - id: prettier
+        name: format HTML with Prettier
+        files: \.html$
+
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
