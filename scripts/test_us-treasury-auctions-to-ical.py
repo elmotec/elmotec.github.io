@@ -35,6 +35,12 @@ def treasury_module() -> ModuleType:
     return module
 
 
+def test_output_file_is_in_repository_root(treasury_module: ModuleType) -> None:
+    assert treasury_module.OUTPUT_FILE == (
+        SCRIPT_PATH.resolve().parent.parent / "treasury-auctions.ics"
+    )
+
+
 @pytest.fixture
 def security() -> dict[str, str]:
     return {

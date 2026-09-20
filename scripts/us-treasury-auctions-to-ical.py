@@ -20,7 +20,7 @@ from icalendar import Calendar, Event
 
 
 API_URL = "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json"
-OUTPUT_DIR = Path(__file__).parent / "output"
+OUTPUT_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_FILE = OUTPUT_DIR / "treasury-auctions.ics"
 REQUEST_TIMEOUT = 30
 
