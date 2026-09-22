@@ -2,6 +2,33 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 BEGIN:VEVENT
+SUMMARY:4-Week Bill Auction
+DTSTART;VALUE=DATE:20260924
+UID:912797VN4-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797VN4\nSecurity Term: 4-Week\nOffering Amount: $900
+ 00000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 AM
+ \nIssue Date: 2026-09-29T00:00:00\nMaturity Date: 2026-10-27T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:8-Week Bill Auction
+DTSTART;VALUE=DATE:20260924
+UID:912797VY0-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797VY0\nSecurity Term: 8-Week\nOffering Amount: $850
+ 00000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 AM
+ \nIssue Date: 2026-09-29T00:00:00\nMaturity Date: 2026-11-24T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:17-Week Bill Auction
+DTSTART;VALUE=DATE:20260923
+UID:912797WR4-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WR4\nSecurity Term: 17-Week\nOffering Amount: $72
+ 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
+ M\nIssue Date: 2026-09-29T00:00:00\nMaturity Date: 2027-01-26T00:00:00
+END:VEVENT
+BEGIN:VEVENT
 SUMMARY:7-Year Note Auction
 DTSTART;VALUE=DATE:20260924
 UID:91282CRM5-auction@treasurydirect.gov
@@ -120,23 +147,5 @@ CATEGORIES:Treasury,Auction,Bill
 DESCRIPTION:CUSIP: 912797SK4\nSecurity Term: 6-Week\nOffering Amount: $750
  00000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 AM
  \nIssue Date: 2026-09-17T00:00:00\nMaturity Date: 2026-10-29T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:13-Week Bill Auction
-DTSTART;VALUE=DATE:20260914
-UID:912797VH7-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797VH7\nSecurity Term: 13-Week\nOffering Amount: $92
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-09-17T00:00:00\nMaturity Date: 2026-12-17T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:26-Week Bill Auction
-DTSTART;VALUE=DATE:20260914
-UID:912797UD7-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797UD7\nSecurity Term: 26-Week\nOffering Amount: $79
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-09-17T00:00:00\nMaturity Date: 2027-03-18T00:00:00
 END:VEVENT
 END:VCALENDAR
