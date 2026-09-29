@@ -20,15 +20,19 @@ from icalendar import Calendar, Event
 
 
 API_URL = "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json"
+UPCOMING_API_URL = (
+    "https://www.treasurydirect.gov/TA_WS/securities/upcoming?format=json"
+)
+SOURCE_URLS = {"announced": API_URL, "upcoming": UPCOMING_API_URL}
 OUTPUT_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_FILE = OUTPUT_DIR / "treasury-auctions.ics"
 REQUEST_TIMEOUT = 30
 
 
-def fetch_treasury_data() -> list[dict[str, Any]]:
-    """Fetch announced Treasury securities from TreasuryDirect API."""
+def fetch_treasury_data(source: str = "announced") -> list[dict[str, Any]]:
+    """Fetch Treasury securities from the selected TreasuryDirect API."""
     try:
-        response = requests.get(API_URL, timeout=REQUEST_TIMEOUT)
+        response = requests.get(SOURCE_URLS[source], timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -41,16 +45,27 @@ def parse_date(date_str: str) -> datetime:
     return datetime.fromisoformat(date_str.replace("T00:00:00", ""))
 
 
+def format_offering_amount(security: dict[str, Any]) -> str:
+    """Format an offering amount, including tentative auctions with no amount yet."""
+    amount = security.get("offeringAmount")
+    return f"Offering Amount: ${amount}" if amount else "Offering Amount: TBD"
+
+
 def filter_securities(
     securities: list[dict[str, Any]], days_back: int
 ) -> list[dict[str, Any]]:
     """Filter out securities with auction dates earlier than days_back from now."""
     cutoff_date = (datetime.now() - timedelta(days=days_back)).date()
+    logging.debug("Auction date cutoff: %s", cutoff_date)
     filtered = []
-    for security in securities:
+    for index, security in enumerate(securities, start=1):
+        logging.debug("Source entry %d: %s", index, security)
         auction_date = parse_date(security["auctionDate"]).date()
         if auction_date >= cutoff_date:
+            logging.debug("Including entry %d: auction date %s", index, auction_date)
             filtered.append(security)
+        else:
+            logging.debug("Skipping entry %d: auction date %s", index, auction_date)
     return filtered
 
 
@@ -71,7 +86,7 @@ def create_announcement_event(security: dict[str, Any]) -> Event:
     description_parts = [
         f"Auction Date: {security['auctionDate']}",
         f"CUSIP: {security['cusip']}",
-        f"Offering Amount: ${security.get('offeringAmount', 'TBD')}",
+        format_offering_amount(security),
     ]
     if maturity_date := security.get("maturityDate"):
         description_parts.append(f"Maturity Date: {maturity_date[:10]}")
@@ -80,6 +95,12 @@ def create_announcement_event(security: dict[str, Any]) -> Event:
 
     event.add("categories", ["Treasury", "Announcement", security["securityType"]])
 
+    logging.debug(
+        "Created announcement event for %s on %s: %s",
+        security["cusip"],
+        announcement_date.date(),
+        summary,
+    )
     return event
 
 
@@ -101,7 +122,7 @@ def create_auction_event(security: dict[str, Any]) -> Event:
     description_parts = [
         f"CUSIP: {security['cusip']}",
         f"Security Term: {security['securityTerm']}",
-        f"Offering Amount: ${security.get('offeringAmount', 'TBD')}",
+        format_offering_amount(security),
     ]
 
     if closing_time := security.get("closingTimeCompetitive"):
@@ -116,6 +137,12 @@ def create_auction_event(security: dict[str, Any]) -> Event:
     event.add("description", "\n".join(description_parts))
     event.add("categories", ["Treasury", "Auction", security["securityType"]])
 
+    logging.debug(
+        "Created auction event for %s on %s: %s",
+        security["cusip"],
+        auction_date.date(),
+        summary,
+    )
     return event
 
 
@@ -192,16 +219,19 @@ def commit_and_push() -> None:
     logging.info("Changes pushed to remote")
 
 
-def main(commit: bool, days_back: int, event_types: list[str]) -> None:
+def main(
+    commit: bool, days_back: int, event_types: list[str], verbose: bool, source: str
+) -> None:
     """Main execution flow."""
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.DEBUG if verbose else logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
     )
 
-    logging.info("Fetching Treasury auction data...")
-    securities = fetch_treasury_data()
-    logging.info(f"Found {len(securities)} announced securities")
+    logging.debug("Event types: %s", ", ".join(event_types))
+    logging.info("Fetching Treasury auction data from %s...", source)
+    securities = fetch_treasury_data(source)
+    logging.info("Found %d securities", len(securities))
 
     logging.info(f"Filtering securities with auction dates in last {days_back} days...")
     securities = filter_securities(securities, days_back)
@@ -223,6 +253,19 @@ def main(commit: bool, days_back: int, event_types: list[str]) -> None:
 
 @click.command()
 @click.option(
+    "--source",
+    type=click.Choice(["announced", "upcoming"], case_sensitive=False),
+    default="upcoming",
+    show_default=True,
+    help="TreasuryDirect auction data source",
+)
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Show debug-level logs",
+)
+@click.option(
     "-c",
     "--commit",
     is_flag=True,
@@ -243,9 +286,11 @@ def main(commit: bool, days_back: int, event_types: list[str]) -> None:
     multiple=True,
     help="Type of events to include in calendar (default: auction)",
 )
-def cli(commit: bool, days_back: int, event_types: list[str]) -> None:
+def cli(
+    commit: bool, days_back: int, event_types: list[str], verbose: bool, source: str
+) -> None:
     """Download Treasury auction data and generate iCalendar file."""
-    main(commit, days_back, event_types)
+    main(commit, days_back, event_types, verbose, source)
 
 
 if __name__ == "__main__":

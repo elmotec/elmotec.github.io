@@ -18,6 +18,7 @@ from unittest.mock import Mock
 
 import pytest
 import requests
+from click.testing import CliRunner
 from icalendar import Calendar
 
 
@@ -90,6 +91,21 @@ def test_create_announcement_event_has_required_fields(
     assert "Maturity Date: 2026-07-21" in event["description"]
 
 
+def test_upcoming_entry_with_unknown_amount_creates_events(
+    treasury_module: ModuleType,
+    security: dict[str, str],
+) -> None:
+    upcoming_security = {**security, "offeringAmount": ""}
+
+    calendar = treasury_module.generate_calendar(
+        [upcoming_security], ["announcement", "auction"]
+    )
+
+    events = calendar.walk("VEVENT")
+    assert len(events) == 2
+    assert all("Offering Amount: TBD" in event["description"] for event in events)
+
+
 @pytest.mark.parametrize(
     ("event_types", "expected_events"),
     [
@@ -155,6 +171,42 @@ def test_fetch_treasury_data_returns_response_json(
         timeout=treasury_module.REQUEST_TIMEOUT,
     )
     response.raise_for_status.assert_called_once_with()
+
+
+def test_fetch_treasury_data_uses_upcoming_endpoint(
+    treasury_module: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+    security: dict[str, str],
+) -> None:
+    response = Mock()
+    response.json.return_value = [security]
+    get = Mock(return_value=response)
+    monkeypatch.setattr(treasury_module.requests, "get", get)
+
+    assert treasury_module.fetch_treasury_data("upcoming") == [security]
+    get.assert_called_once_with(
+        treasury_module.UPCOMING_API_URL,
+        timeout=treasury_module.REQUEST_TIMEOUT,
+    )
+
+
+@pytest.mark.parametrize(
+    ("args", "expected_source"),
+    [([], "announced"), (["--source", "upcoming"], "upcoming")],
+)
+def test_cli_passes_selected_source(
+    treasury_module: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+    args: list[str],
+    expected_source: str,
+) -> None:
+    main = Mock()
+    monkeypatch.setattr(treasury_module, "main", main)
+
+    result = CliRunner().invoke(treasury_module.cli, args)
+
+    assert result.exit_code == 0, result.output
+    main.assert_called_once_with(False, 7, ("auction",), False, expected_source)
 
 
 def test_fetch_treasury_data_exits_on_request_error(
