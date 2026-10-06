@@ -2,15 +2,6 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 BEGIN:VEVENT
-SUMMARY:3-Year Note Auction
-DTSTART;VALUE=DATE:20261006
-UID:91282CRQ6-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Note
-DESCRIPTION:CUSIP: 91282CRQ6\nSecurity Term: 3-Year\nOffering Amount: $580
- 00000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 PM
- \nIssue Date: 2026-10-15T00:00:00\nMaturity Date: 2029-10-15T00:00:00
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:9-Year 10-Month Note Auction
 DTSTART;VALUE=DATE:20261007
 UID:91282CRF0-auction@treasurydirect.gov
