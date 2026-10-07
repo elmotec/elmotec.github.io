@@ -2,16 +2,6 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 BEGIN:VEVENT
-SUMMARY:9-Year 10-Month Note Auction
-DTSTART;VALUE=DATE:20261007
-UID:91282CRF0-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Note
-DESCRIPTION:CUSIP: 91282CRF0\nSecurity Term: 9-Year 10-Month\nOffering Amo
- unt: $39000000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing:
-  12:00 PM\nIssue Date: 2026-10-15T00:00:00\nMaturity Date: 2036-08-15T00:0
- 0:00
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:29-Year 10-Month Bond Auction
 DTSTART;VALUE=DATE:20261008
 UID:912810UW6-auction@treasurydirect.gov
