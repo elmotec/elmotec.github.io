@@ -22,15 +22,6 @@ DESCRIPTION:CUSIP: 912810UW6\nSecurity Term: 29-Year 10-Month\nOffering Am
  00:00
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:17-Week Bill Auction
-DTSTART;VALUE=DATE:20261007
-UID:912797WY9-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WY9\nSecurity Term: 17-Week\nOffering Amount: $75
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-10-13T00:00:00\nMaturity Date: 2027-02-09T00:00:00
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:4-Week Bill Auction
 DTSTART;VALUE=DATE:20261008
 UID:912797VW4-auction@treasurydirect.gov
