@@ -2,16 +2,6 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 BEGIN:VEVENT
-SUMMARY:29-Year 10-Month Bond Auction
-DTSTART;VALUE=DATE:20261008
-UID:912810UW6-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bond
-DESCRIPTION:CUSIP: 912810UW6\nSecurity Term: 29-Year 10-Month\nOffering Am
- ount: $22000000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing
- : 12:00 PM\nIssue Date: 2026-10-15T00:00:00\nMaturity Date: 2056-08-15T00:
- 00:00
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:13-Week Bill Auction
 DTSTART;VALUE=DATE:20261013
 UID:912797VT1-auction@treasurydirect.gov
