@@ -28,4 +28,68 @@ DESCRIPTION:CUSIP: 912797SU2\nSecurity Term: 6-Week\nOffering Amount: $950
  00000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 PM
  \nIssue Date: 2026-10-15T00:00:00\nMaturity Date: 2026-11-27T00:00:00
 END:VEVENT
+BEGIN:VEVENT
+SUMMARY:17-Week Bill Auction
+DTSTART;VALUE=DATE:20261014
+UID:912797WZ6-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WZ6\nSecurity Term: 17-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-10-20T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:4-Week Bill Auction
+DTSTART;VALUE=DATE:20261015
+UID:912797VX2-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797VX2\nSecurity Term: 4-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-10-20T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:8-Week Bill Auction
+DTSTART;VALUE=DATE:20261015
+UID:912797WF0-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WF0\nSecurity Term: 8-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-10-20T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:13-Week Bill Auction
+DTSTART;VALUE=DATE:20261019
+UID:912797TM9-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797TM9\nSecurity Term: 13-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-10-22T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:26-Week Bill Auction
+DTSTART;VALUE=DATE:20261019
+UID:912797WV5-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WV5\nSecurity Term: 26-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-10-22T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:6-Week Bill Auction
+DTSTART;VALUE=DATE:20261020
+UID:912797VA2-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797VA2\nSecurity Term: 6-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-10-22T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:19-Year 10-Month Bond Auction
+DTSTART;VALUE=DATE:20261021
+UID:912810UX4-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bond
+DESCRIPTION:CUSIP: 912810UX4\nSecurity Term: 19-Year 10-Month\nOffering Am
+ ount: TBD\nIssue Date: 2026-10-23T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:5-Year Note Auction
+DTSTART;VALUE=DATE:20261022
+UID:91282CRR4-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Note
+DESCRIPTION:CUSIP: 91282CRR4\nSecurity Term: 5-Year\nOffering Amount: TBD\
+ nIssue Date: 2026-10-30T00:00:00
+END:VEVENT
 END:VCALENDAR
