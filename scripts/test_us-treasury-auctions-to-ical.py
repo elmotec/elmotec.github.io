@@ -192,7 +192,7 @@ def test_fetch_treasury_data_uses_upcoming_endpoint(
 
 @pytest.mark.parametrize(
     ("args", "expected_source"),
-    [([], "announced"), (["--source", "upcoming"], "upcoming")],
+    [([], "upcoming"), (["--source", "announced"], "announced")],
 )
 def test_cli_passes_selected_source(
     treasury_module: ModuleType,

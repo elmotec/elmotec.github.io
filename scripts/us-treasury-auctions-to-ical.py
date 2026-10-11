@@ -10,7 +10,8 @@
 import logging
 import subprocess
 import sys
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from typing import Any
 
@@ -23,9 +24,16 @@ API_URL = "https://www.treasurydirect.gov/TA_WS/securities/announced?format=json
 UPCOMING_API_URL = (
     "https://www.treasurydirect.gov/TA_WS/securities/upcoming?format=json"
 )
-SOURCE_URLS = {"announced": API_URL, "upcoming": UPCOMING_API_URL}
+AUCTIONED_API_URL = "https://www.treasurydirect.gov/TA_WS/securities/auctioned?format=json"
+SOURCE_URLS = {
+    "announced": API_URL,
+    "upcoming": UPCOMING_API_URL,
+    "auctioned": AUCTIONED_API_URL,
+}
 OUTPUT_DIR = Path(__file__).resolve().parent.parent
 OUTPUT_FILE = OUTPUT_DIR / "treasury-auctions.ics"
+RESULTS_FILE = OUTPUT_DIR / "treasury-auction-results.ics"
+EASTERN = ZoneInfo("America/New_York")
 REQUEST_TIMEOUT = 30
 
 
@@ -146,6 +154,55 @@ def create_auction_event(security: dict[str, Any]) -> Event:
     return event
 
 
+def create_result_event(security: dict[str, Any]) -> Event:
+    """Create an all-day completed auction event on its auction date."""
+    auction_date = parse_date(security["auctionDate"]).date()
+    security_type = security.get("type") or security["securityType"]
+    rate_field, rate_label = {
+        "Bill": ("highDiscountRate", "High Discount Rate"),
+        "FRN": ("highDiscountMargin", "High Discount Margin"),
+    }.get(security_type, ("highYield", "High Yield"))
+    rate = security[rate_field]
+    if not rate:
+        raise ValueError(f"Missing {rate_label} for {security['cusip']}")
+    event = Event()
+    event.add("uid", f"{security['cusip']}-{auction_date}-result@treasurydirect.gov")
+    event.add("dtstart", auction_date)
+    event.add("dtstamp", datetime.combine(auction_date, datetime.min.time(), UTC))
+    if updated := security.get("updatedTimestamp"):
+        modified = datetime.fromisoformat(updated).replace(tzinfo=EASTERN).astimezone(UTC)
+        event.add("last-modified", modified)
+    event.add("summary", f"{security['securityTerm']} {security_type} Result: {rate_label} {rate}%")
+    results_url = (
+        "https://www.treasurydirect.gov/instit/annceresult/press/preanre/"
+        f"{auction_date.year}/{security['pdfFilenameCompetitiveResults']}"
+    )
+    description = [
+        f"CUSIP: {security['cusip']}",
+        f"Security Term: {security['securityTerm']}",
+        f"{rate_label}: {rate}%",
+    ]
+    if closing_time := security.get("closingTimeCompetitive"):
+        description.append(f"Competitive Closing: {closing_time} Eastern")
+    for field, label, prefix, suffix in [
+        ("highInvestmentRate", "Investment Rate", "", "%"),
+        ("spread", "Spread", "", "%"),
+        ("pricePer100", "Price per $100", "$", ""),
+        ("unadjustedPrice", "Unadjusted Price per $100", "$", ""),
+        ("bidToCoverRatio", "Bid-to-Cover Ratio", "", ""),
+        ("totalAccepted", "Amount Accepted", "$", ""),
+        ("issueDate", "Issue Date", "", ""),
+        ("maturityDate", "Maturity Date", "", ""),
+    ]:
+        if value := security.get(field):
+            description.append(f"{label}: {prefix}{value}{suffix}")
+    description.append(f"Official Results: {results_url}")
+    event.add("description", "\n".join(description))
+    event.add("url", results_url)
+    event.add("categories", ["Treasury", "Auction Result", security_type])
+    return event
+
+
 def generate_calendar(securities: list[dict[str, Any]], event_types: list[str]) -> Calendar:
     """Generate iCalendar object from Treasury securities data."""
     calendar = Calendar()
@@ -153,19 +210,24 @@ def generate_calendar(securities: list[dict[str, Any]], event_types: list[str]) 
     calendar.add("version", "2.0")
 
     for security in securities:
+        if "result" in event_types:
+            calendar.add_component(create_result_event(security))
         if "announcement" in event_types:
             calendar.add_component(create_announcement_event(security))
         if "auction" in event_types:
             calendar.add_component(create_auction_event(security))
 
+    if "result" in event_types:
+        calendar.add("x-wr-calname", "U.S. Treasury Auction Results")
     return calendar
 
 
-def save_calendar(calendar: Calendar) -> None:
+def save_calendar(calendar: Calendar, output_file: Path | None = None) -> None:
     """Save calendar to .ics file."""
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    OUTPUT_FILE.write_bytes(calendar.to_ical())
-    logging.info(f"Calendar saved to {OUTPUT_FILE}")
+    output_file = output_file or OUTPUT_FILE
+    output_file.parent.mkdir(parents=True, exist_ok=True)
+    output_file.write_bytes(calendar.to_ical())
+    logging.info(f"Calendar saved to {output_file}")
 
 
 def run_git_command(command: list[str]) -> subprocess.CompletedProcess:
@@ -189,21 +251,22 @@ def has_changes_to_commit(output: str) -> bool:
     return False
 
 
-def commit_and_push() -> None:
+def commit_and_push(output_file: Path | None = None) -> None:
     """Commit calendar file to git and push to remote."""
-    result = run_git_command(["git", "add", str(OUTPUT_FILE)])
+    output_file = output_file or OUTPUT_FILE
+    result = run_git_command(["git", "add", str(output_file)])
     if result.returncode != 0:
         logging.error(f"Error staging changes: {result.stderr}")
         sys.exit(1)
 
-    result = run_git_command(["git", "diff", "--cached", str(OUTPUT_FILE)])
+    result = run_git_command(["git", "diff", "--cached", str(output_file)])
 
     if not has_changes_to_commit(result.stdout):
         logging.info("No changes to commit")
         return
 
     result = run_git_command([
-        "git", "commit", "-m", "chore: update Treasury auction calendar"
+        "git", "commit", "-m", f"chore: update {output_file.stem}"
     ])
     if result.returncode != 0:
         logging.error(f"Error committing changes: {result.stderr}")
@@ -234,17 +297,34 @@ def main(
     logging.info("Found %d securities", len(securities))
 
     logging.info(f"Filtering securities with auction dates in last {days_back} days...")
-    securities = filter_securities(securities, days_back)
-    logging.info(f"After filtering: {len(securities)} securities")
-
+    if source != "auctioned":
+        securities = filter_securities(securities, days_back)
+    output_file = OUTPUT_FILE
+    if source == "auctioned":
+        today = datetime.now(EASTERN).date()
+        cutoff = today - timedelta(days=days_back)
+        if securities and cutoff < min(parse_date(row["auctionDate"]).date() for row in securities):
+            logging.warning("Requested history exceeds TreasuryDirect recent-results history")
+        # Only completed competitive results belong in this feed.
+        securities = [
+            security for security in securities
+            if cutoff <= parse_date(security["auctionDate"]).date() <= today
+            and security.get("pdfFilenameCompetitiveResults")
+        ]
+        event_types = ["result"]
+        output_file = RESULTS_FILE
+    logging.info("After filtering: %d securities", len(securities))
     logging.info("Generating calendar...")
-    calendar = generate_calendar(securities, event_types)
+    try:
+        calendar = generate_calendar(securities, event_types)
+    except (KeyError, ValueError) as error:
+        raise click.ClickException(f"Invalid Treasury auction data: {error}") from error
 
-    save_calendar(calendar)
+    save_calendar(calendar, output_file)
 
     if commit:
         logging.info("Committing and pushing changes...")
-        commit_and_push()
+        commit_and_push(output_file)
     else:
         logging.info("Skipping commit (use --commit to enable)")
 
@@ -254,10 +334,10 @@ def main(
 @click.command()
 @click.option(
     "--source",
-    type=click.Choice(["announced", "upcoming"], case_sensitive=False),
+    type=click.Choice(["announced", "upcoming", "auctioned"], case_sensitive=False),
     default="upcoming",
     show_default=True,
-    help="TreasuryDirect auction data source",
+    help="TreasuryDirect source: auctioned writes treasury-auction-results.ics",
 )
 @click.option(
     "-v",
@@ -274,7 +354,7 @@ def main(
 )
 @click.option(
     "--days-back",
-    type=int,
+    type=click.IntRange(min=0),
     default=7,
     help="Include auctions from the last N days (default: 7)",
 )
@@ -284,12 +364,14 @@ def main(
     type=click.Choice(["announcement", "auction"], case_sensitive=False),
     default=["auction"],
     multiple=True,
-    help="Type of events to include in calendar (default: auction)",
+    help="Upcoming/announced event types (auctioned always produces results)",
 )
 def cli(
     commit: bool, days_back: int, event_types: list[str], verbose: bool, source: str
 ) -> None:
     """Download Treasury auction data and generate iCalendar file."""
+    if source == "auctioned" and event_types != ("auction",):
+        raise click.UsageError("--source auctioned generates results; omit --event-type")
     main(commit, days_back, event_types, verbose, source)
 
 
