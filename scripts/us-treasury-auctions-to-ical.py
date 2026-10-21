@@ -35,6 +35,23 @@ OUTPUT_FILE = OUTPUT_DIR / "treasury-auctions.ics"
 RESULTS_FILE = OUTPUT_DIR / "treasury-auction-results.ics"
 EASTERN = ZoneInfo("America/New_York")
 REQUEST_TIMEOUT = 30
+FIELD_ALIASES = {
+    "auctionDate": "competitiveAuctionCloseDate",
+    "closingTimeCompetitive": "competitiveAuctionCloseTime",
+    "closingTimeNoncompetitive": "noncompetitiveAuctionCloseTime",
+    "highDiscountRate": "highRate",
+    "highInvestmentRate": "investmentRate",
+    "pdfFilenameCompetitiveResults": "treasuryAuctionResultsPressReleaseFileName",
+}
+
+
+def normalize_security(security: dict[str, Any]) -> dict[str, Any]:
+    """Accept both legacy and current TreasuryDirect field names."""
+    normalized = security.copy()
+    for old_name, current_name in FIELD_ALIASES.items():
+        if old_name not in normalized and current_name in security:
+            normalized[old_name] = security[current_name]
+    return normalized
 
 
 def fetch_treasury_data(source: str = "announced") -> list[dict[str, Any]]:
@@ -42,7 +59,7 @@ def fetch_treasury_data(source: str = "announced") -> list[dict[str, Any]]:
     try:
         response = requests.get(SOURCE_URLS[source], timeout=REQUEST_TIMEOUT)
         response.raise_for_status()
-        return response.json()
+        return [normalize_security(security) for security in response.json()]
     except requests.RequestException as e:
         logging.error(f"Error fetching Treasury data: {e}")
         sys.exit(1)

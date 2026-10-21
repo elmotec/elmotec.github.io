@@ -190,6 +190,55 @@ def test_fetch_treasury_data_uses_upcoming_endpoint(
     )
 
 
+def test_main_accepts_current_upcoming_fields(
+    treasury_module: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    security: dict[str, str],
+) -> None:
+    current_security = {**security}
+    current_security["competitiveAuctionCloseDate"] = current_security.pop("auctionDate")
+    current_security["competitiveAuctionCloseTime"] = current_security.pop("closingTimeCompetitive")
+    current_security["noncompetitiveAuctionCloseTime"] = current_security.pop("closingTimeNoncompetitive")
+    response = Mock()
+    response.json.return_value = [current_security]
+    monkeypatch.setattr(treasury_module.requests, "get", Mock(return_value=response))
+    output_file = tmp_path / "upcoming.ics"
+    monkeypatch.setattr(treasury_module, "OUTPUT_FILE", output_file)
+
+    treasury_module.main(False, 10000, ["auction"], False, "upcoming")
+
+    event = Calendar.from_ical(output_file.read_bytes()).walk("VEVENT")[0]
+    assert event.decoded("dtstart") == date(2026, 6, 18)
+    assert "Competitive Closing: 11:30 AM" in event["description"]
+    assert "Non-Competitive Closing: 11:00 AM" in event["description"]
+
+
+def test_main_accepts_current_auctioned_fields(
+    treasury_module: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    security: dict[str, str],
+) -> None:
+    current_security = {**security}
+    current_security["competitiveAuctionCloseDate"] = current_security.pop("auctionDate")
+    current_security["competitiveAuctionCloseTime"] = current_security.pop("closingTimeCompetitive")
+    current_security["treasuryAuctionResultsPressReleaseFileName"] = "R_20260618_1.pdf"
+    current_security["highRate"] = "4.155"
+    response = Mock()
+    response.json.return_value = [current_security]
+    monkeypatch.setattr(treasury_module.requests, "get", Mock(return_value=response))
+    output_file = tmp_path / "results.ics"
+    monkeypatch.setattr(treasury_module, "RESULTS_FILE", output_file)
+
+    treasury_module.main(False, 10000, ["auction"], False, "auctioned")
+
+    event = Calendar.from_ical(output_file.read_bytes()).walk("VEVENT")[0]
+    assert event.decoded("dtstart") == date(2026, 6, 18)
+    assert "High Discount Rate 4.155%" in event["summary"]
+    assert "R_20260618_1.pdf" in event["url"]
+
+
 @pytest.mark.parametrize(
     ("args", "expected_source"),
     [([], "upcoming"), (["--source", "announced"], "announced")],
