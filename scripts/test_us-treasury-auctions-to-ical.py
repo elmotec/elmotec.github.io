@@ -10,6 +10,7 @@
 # ///
 
 import importlib.util
+import os
 import subprocess
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -23,6 +24,32 @@ from icalendar import Calendar
 
 
 SCRIPT_PATH = Path(__file__).with_name("us-treasury-auctions-to-ical.py")
+WRAPPER_PATH = SCRIPT_PATH.parent.parent / "us-treasury-auctions-to-ical.sh"
+
+
+def test_wrapper_runs_upcoming_and_auctioned_sources(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    calls = tmp_path / "uv-calls"
+    stub = tmp_path / "uv"
+    stub.write_text('#!/bin/sh\nprintf "%s\\n" "$*" >> "$UV_CALLS"\n')
+    stub.chmod(0o755)
+    monkeypatch.setenv("PATH", f"{tmp_path}{os.pathsep}{os.environ['PATH']}")
+    monkeypatch.setenv("UV_CALLS", str(calls))
+
+    result = subprocess.run(
+        ["bash", str(WRAPPER_PATH), "--days-back", "14"],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    assert result.returncode == 0, result.stderr
+    assert calls.read_text().splitlines() == [
+        "run scripts/us-treasury-auctions-to-ical.py --source upcoming --days-back 14",
+        "run scripts/us-treasury-auctions-to-ical.py --source auctioned --days-back 14",
+    ]
 
 
 @pytest.fixture(scope="module")
@@ -237,6 +264,36 @@ def test_main_accepts_current_auctioned_fields(
     assert event.decoded("dtstart") == date(2026, 6, 18)
     assert "High Discount Rate 4.155%" in event["summary"]
     assert "R_20260618_1.pdf" in event["url"]
+
+
+def test_cash_management_bill_uses_bill_discount_rate(
+    treasury_module: ModuleType,
+    security: dict[str, str],
+) -> None:
+    cmb = {
+        **security,
+        "type": "CMB",
+        "highRate": "3.925",
+        "highYield": "",
+        "treasuryAuctionResultsPressReleaseFileName": "R_20260618_3.pdf",
+    }
+
+    event = treasury_module.create_result_event(treasury_module.normalize_security(cmb))
+
+    assert event["summary"] == "4-Week Bill Result: High Discount Rate 3.925%"
+    assert "High Discount Rate: 3.925%" in event["description"]
+
+
+def test_result_omits_missing_rate_and_results_link(
+    treasury_module: ModuleType,
+    security: dict[str, str],
+) -> None:
+    event = treasury_module.create_result_event(security)
+
+    assert event["summary"] == "4-Week Bill Result"
+    assert "High Discount Rate" not in event["description"]
+    assert "Official Results" not in event["description"]
+    assert "url" not in event
 
 
 @pytest.mark.parametrize(

@@ -174,14 +174,14 @@ def create_auction_event(security: dict[str, Any]) -> Event:
 def create_result_event(security: dict[str, Any]) -> Event:
     """Create an all-day completed auction event on its auction date."""
     auction_date = parse_date(security["auctionDate"]).date()
-    security_type = security.get("type") or security["securityType"]
+    security_type = security["securityType"] if security["securityType"] == "Bill" else (
+        security.get("type") or security["securityType"]
+    )
     rate_field, rate_label = {
         "Bill": ("highDiscountRate", "High Discount Rate"),
         "FRN": ("highDiscountMargin", "High Discount Margin"),
     }.get(security_type, ("highYield", "High Yield"))
-    rate = security[rate_field]
-    if not rate:
-        raise ValueError(f"Missing {rate_label} for {security['cusip']}")
+    rate = security.get(rate_field)
     event = Event()
     event.add("uid", f"{security['cusip']}-{auction_date}-result@treasurydirect.gov")
     event.add("dtstart", auction_date)
@@ -189,16 +189,16 @@ def create_result_event(security: dict[str, Any]) -> Event:
     if updated := security.get("updatedTimestamp"):
         modified = datetime.fromisoformat(updated).replace(tzinfo=EASTERN).astimezone(UTC)
         event.add("last-modified", modified)
-    event.add("summary", f"{security['securityTerm']} {security_type} Result: {rate_label} {rate}%")
-    results_url = (
-        "https://www.treasurydirect.gov/instit/annceresult/press/preanre/"
-        f"{auction_date.year}/{security['pdfFilenameCompetitiveResults']}"
-    )
+    summary = f"{security['securityTerm']} {security_type} Result"
+    if rate:
+        summary += f": {rate_label} {rate}%"
+    event.add("summary", summary)
     description = [
         f"CUSIP: {security['cusip']}",
         f"Security Term: {security['securityTerm']}",
-        f"{rate_label}: {rate}%",
     ]
+    if rate:
+        description.append(f"{rate_label}: {rate}%")
     if closing_time := security.get("closingTimeCompetitive"):
         description.append(f"Competitive Closing: {closing_time} Eastern")
     for field, label, prefix, suffix in [
@@ -213,9 +213,14 @@ def create_result_event(security: dict[str, Any]) -> Event:
     ]:
         if value := security.get(field):
             description.append(f"{label}: {prefix}{value}{suffix}")
-    description.append(f"Official Results: {results_url}")
+    if filename := security.get("pdfFilenameCompetitiveResults"):
+        results_url = (
+            "https://www.treasurydirect.gov/instit/annceresult/press/preanre/"
+            f"{auction_date.year}/{filename}"
+        )
+        description.append(f"Official Results: {results_url}")
+        event.add("url", results_url)
     event.add("description", "\n".join(description))
-    event.add("url", results_url)
     event.add("categories", ["Treasury", "Auction Result", security_type])
     return event
 
