@@ -24,7 +24,7 @@ from icalendar import Calendar
 
 
 SCRIPT_PATH = Path(__file__).with_name("us-treasury-auctions-to-ical.py")
-WRAPPER_PATH = SCRIPT_PATH.parent.parent / "us-treasury-auctions-to-ical.sh"
+WRAPPER_PATH = SCRIPT_PATH.parent.parent / "update-site.sh"
 
 
 def test_wrapper_runs_upcoming_and_auctioned_sources(
