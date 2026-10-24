@@ -1,2 +1,3 @@
 # iCalendar requires CRLF; preserve these bytes in the repository and published feeds.
 *.ics -text
+*.ics whitespace=cr-at-eol

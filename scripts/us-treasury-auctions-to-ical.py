@@ -173,6 +173,11 @@ def create_auction_event(security: dict[str, Any]) -> Event:
 
 def create_result_event(security: dict[str, Any]) -> Event:
     """Create an all-day completed auction event on its auction date."""
+    def warn_missing(label: str) -> None:
+        logging.warning(
+            "Missing %s for %s; omitted from result event", label, security["cusip"]
+        )
+
     auction_date = parse_date(security["auctionDate"]).date()
     security_type = security["securityType"] if security["securityType"] == "Bill" else (
         security.get("type") or security["securityType"]
@@ -189,9 +194,13 @@ def create_result_event(security: dict[str, Any]) -> Event:
     if updated := security.get("updatedTimestamp"):
         modified = datetime.fromisoformat(updated).replace(tzinfo=EASTERN).astimezone(UTC)
         event.add("last-modified", modified)
+    else:
+        warn_missing("Last Modified")
     summary = f"{security['securityTerm']} {security_type} Result"
     if rate:
         summary += f": {rate_label} {rate}%"
+    else:
+        warn_missing(rate_label)
     event.add("summary", summary)
     description = [
         f"CUSIP: {security['cusip']}",
@@ -201,6 +210,16 @@ def create_result_event(security: dict[str, Any]) -> Event:
         description.append(f"{rate_label}: {rate}%")
     if closing_time := security.get("closingTimeCompetitive"):
         description.append(f"Competitive Closing: {closing_time} Eastern")
+    else:
+        warn_missing("Competitive Closing")
+    expected_fields = {"bidToCoverRatio", "issueDate", "maturityDate"}
+    expected_fields.update(
+        {
+            "Bill": {"highInvestmentRate"},
+            "FRN": {"spread"},
+            "TIPS": {"unadjustedPrice"},
+        }.get(security_type, set())
+    )
     for field, label, prefix, suffix in [
         ("highInvestmentRate", "Investment Rate", "", "%"),
         ("spread", "Spread", "", "%"),
@@ -213,6 +232,8 @@ def create_result_event(security: dict[str, Any]) -> Event:
     ]:
         if value := security.get(field):
             description.append(f"{label}: {prefix}{value}{suffix}")
+        elif field in expected_fields:
+            warn_missing(label)
     if filename := security.get("pdfFilenameCompetitiveResults"):
         results_url = (
             "https://www.treasurydirect.gov/instit/annceresult/press/preanre/"
@@ -220,6 +241,8 @@ def create_result_event(security: dict[str, Any]) -> Event:
         )
         description.append(f"Official Results: {results_url}")
         event.add("url", results_url)
+    else:
+        warn_missing("Official Results")
     event.add("description", "\n".join(description))
     event.add("categories", ["Treasury", "Auction Result", security_type])
     return event
@@ -244,11 +267,52 @@ def generate_calendar(securities: list[dict[str, Any]], event_types: list[str]) 
     return calendar
 
 
+def remove_trailing_ical_whitespace(data: bytes) -> bytes:
+    """Refold affected content lines without changing their unfolded text."""
+    lines = data.split(b"\r\n")
+    cleaned = []
+    index = 0
+    while index < len(lines):
+        group = [lines[index]]
+        index += 1
+        while index < len(lines) and lines[index].startswith((b" ", b"\t")):
+            group.append(lines[index])
+            index += 1
+
+        if not any(line.endswith((b" ", b"\t")) for line in group):
+            cleaned.extend(group)
+            continue
+
+        unfolded = group[0] + b"".join(line[1:] for line in group[1:])
+        remaining = unfolded.rstrip(b" \t").decode("utf-8")
+        first = True
+        while remaining:
+            capacity = 75 if first else 74  # Continuation lines start with a space.
+            length = 0
+            end = 0
+            for char in remaining:
+                size = len(char.encode("utf-8"))
+                if length + size > capacity:
+                    break
+                length += size
+                end += 1
+            if end < len(remaining):
+                while end > 0 and remaining[end - 1] in " \t":
+                    end -= 1
+            if end == 0:
+                raise ValueError("Cannot fold iCalendar line without trailing whitespace")
+            cleaned.append(("" if first else " ").encode() + remaining[:end].encode())
+            remaining = remaining[end:]
+            first = False
+
+    return b"\r\n".join(cleaned)
+
+
 def save_calendar(calendar: Calendar, output_file: Path | None = None) -> None:
     """Save calendar to .ics file."""
     output_file = output_file or OUTPUT_FILE
     output_file.parent.mkdir(parents=True, exist_ok=True)
-    output_file.write_bytes(calendar.to_ical())
+    output_file.write_bytes(remove_trailing_ical_whitespace(calendar.to_ical()))
     logging.info(f"Calendar saved to {output_file}")
 
 
@@ -327,11 +391,10 @@ def main(
         cutoff = today - timedelta(days=days_back)
         if securities and cutoff < min(parse_date(row["auctionDate"]).date() for row in securities):
             logging.warning("Requested history exceeds TreasuryDirect recent-results history")
-        # Only completed competitive results belong in this feed.
+        # Keep auctioned records even when a result detail is unavailable.
         securities = [
             security for security in securities
             if cutoff <= parse_date(security["auctionDate"]).date() <= today
-            and security.get("pdfFilenameCompetitiveResults")
         ]
         event_types = ["result"]
         output_file = RESULTS_FILE

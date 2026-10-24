@@ -287,6 +287,7 @@ def test_cash_management_bill_uses_bill_discount_rate(
 def test_result_omits_missing_rate_and_results_link(
     treasury_module: ModuleType,
     security: dict[str, str],
+    caplog: pytest.LogCaptureFixture,
 ) -> None:
     event = treasury_module.create_result_event(security)
 
@@ -294,6 +295,33 @@ def test_result_omits_missing_rate_and_results_link(
     assert "High Discount Rate" not in event["description"]
     assert "Official Results" not in event["description"]
     assert "url" not in event
+    assert "Missing High Discount Rate for 912797TEST" in caplog.text
+    assert "Missing Investment Rate for 912797TEST" in caplog.text
+    assert "Missing Bid-to-Cover Ratio for 912797TEST" in caplog.text
+    assert "Missing Official Results for 912797TEST" in caplog.text
+    assert "Missing Spread" not in caplog.text
+    assert "Missing Amount Accepted" not in caplog.text
+
+
+def test_auctioned_source_keeps_result_without_pdf_and_warns(
+    treasury_module: ModuleType,
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+    security: dict[str, str],
+    caplog: pytest.LogCaptureFixture,
+) -> None:
+    response = Mock()
+    response.json.return_value = [{**security, "highRate": "4.155"}]
+    monkeypatch.setattr(treasury_module.requests, "get", Mock(return_value=response))
+    output_file = tmp_path / "results.ics"
+    monkeypatch.setattr(treasury_module, "RESULTS_FILE", output_file)
+
+    treasury_module.main(False, 10000, ["auction"], False, "auctioned")
+
+    event = Calendar.from_ical(output_file.read_bytes()).walk("VEVENT")[0]
+    assert event["summary"] == "4-Week Bill Result: High Discount Rate 4.155%"
+    assert "url" not in event
+    assert "Missing Official Results for 912797TEST" in caplog.text
 
 
 @pytest.mark.parametrize(
@@ -349,6 +377,30 @@ def test_save_calendar_writes_valid_ical(
     events = parsed.walk("VEVENT")
     assert len(events) == 1
     assert events[0]["uid"] == "912797TEST-auction@treasurydirect.gov"
+
+
+def test_save_calendar_removes_trailing_spaces_without_changing_description(
+    treasury_module: ModuleType,
+    tmp_path: Path,
+) -> None:
+    calendar = Calendar()
+    event = treasury_module.Event()
+    description = (
+        "CUSIP: 912797XA0\nSecurity Term: 17-Week\n"
+        "High Discount Rate: 4.155%\nCompetitive Closing: 11:30 AM Eastern"
+    )
+    event.add("description", description)
+    calendar.add_component(event)
+    assert any(line.endswith(b" ") for line in calendar.to_ical().split(b"\r\n"))
+
+    output_file = tmp_path / "results.ics"
+    treasury_module.save_calendar(calendar, output_file)
+
+    data = output_file.read_bytes()
+    assert all(not line.endswith((b" ", b"\t")) for line in data.split(b"\r\n"))
+    assert all(len(line) <= 75 for line in data.split(b"\r\n"))
+    parsed_event = Calendar.from_ical(data).walk("VEVENT")[0]
+    assert str(parsed_event["description"]) == description
 
 
 @pytest.mark.parametrize(
