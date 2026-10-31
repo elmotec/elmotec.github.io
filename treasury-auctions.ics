@@ -3,122 +3,101 @@ VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 BEGIN:VEVENT
 SUMMARY:13-Week Bill Auction
-DTSTART;VALUE=DATE:20261026
-UID:912797VU8-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797VU8\nSecurity Term: 13-Week\nOffering Amount: $95
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-10-29T00:00:00\nMaturity Date: 2027-01-28T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:26-Week Bill Auction
-DTSTART;VALUE=DATE:20261026
-UID:912797WW3-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WW3\nSecurity Term: 26-Week\nOffering Amount: $82
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-10-29T00:00:00\nMaturity Date: 2027-04-29T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:2-Year Note Auction
-DTSTART;VALUE=DATE:20261026
-UID:91282CRU7-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Note
-DESCRIPTION:CUSIP: 91282CRU7\nSecurity Term: 2-Year\nOffering Amount: $690
- 00000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 PM
- \nIssue Date: 2026-11-02T00:00:00\nMaturity Date: 2028-10-31T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:52-Week Bill Auction
-DTSTART;VALUE=DATE:20261027
-UID:912797WT0-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WT0\nSecurity Term: 52-Week\nOffering Amount: $54
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-10-29T00:00:00\nMaturity Date: 2027-10-28T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:6-Week Bill Auction
-DTSTART;VALUE=DATE:20261027
-UID:912797VG9-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797VG9\nSecurity Term: 6-Week\nOffering Amount: $950
- 00000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 AM
- \nIssue Date: 2026-10-29T00:00:00\nMaturity Date: 2026-12-10T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:5-Year Note Auction
-DTSTART;VALUE=DATE:20261027
-UID:91282CRT0-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Note
-DESCRIPTION:CUSIP: 91282CRT0\nSecurity Term: 5-Year\nOffering Amount: $700
- 00000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 PM
- \nIssue Date: 2026-11-02T00:00:00\nMaturity Date: 2031-10-31T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:2-Year Note Auction
-DTSTART;VALUE=DATE:20261028
-UID:91282CRS2-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Note
-DESCRIPTION:CUSIP: 91282CRS2\nSecurity Term: 2-Year\nOffering Amount: $300
- 00000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 AM
- \nIssue Date: 2026-11-02T00:00:00\nMaturity Date: 2028-10-31T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:7-Year Note Auction
-DTSTART;VALUE=DATE:20261029
-UID:91282CRV5-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Note
-DESCRIPTION:CUSIP: 91282CRV5\nSecurity Term: 7-Year\nOffering Amount: $440
- 00000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 PM
- \nIssue Date: 2026-11-02T00:00:00\nMaturity Date: 2033-10-31T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:17-Week Bill Auction
-DTSTART;VALUE=DATE:20261028
-UID:912797XB8-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797XB8\nSecurity Term: 17-Week\nOffering Amount: TBD
- \nIssue Date: 2026-11-03T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:4-Week Bill Auction
-DTSTART;VALUE=DATE:20261029
-UID:912797VZ7-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797VZ7\nSecurity Term: 4-Week\nOffering Amount: TBD\
- nIssue Date: 2026-11-03T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:8-Week Bill Auction
-DTSTART;VALUE=DATE:20261029
-UID:912797WH6-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WH6\nSecurity Term: 8-Week\nOffering Amount: TBD\
- nIssue Date: 2026-11-03T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:13-Week Bill Auction
 DTSTART;VALUE=DATE:20261102
 UID:912797VV6-auction@treasurydirect.gov
 CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797VV6\nSecurity Term: 13-Week\nOffering Amount: TBD
- \nIssue Date: 2026-11-05T00:00:00
+DESCRIPTION:CUSIP: 912797VV6\nSecurity Term: 13-Week\nOffering Amount: $95
+ 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
+ M\nIssue Date: 2026-11-05T00:00:00\nMaturity Date: 2027-02-04T00:00:00
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:26-Week Bill Auction
 DTSTART;VALUE=DATE:20261102
 UID:912797WX1-auction@treasurydirect.gov
 CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WX1\nSecurity Term: 26-Week\nOffering Amount: TBD
- \nIssue Date: 2026-11-05T00:00:00
+DESCRIPTION:CUSIP: 912797WX1\nSecurity Term: 26-Week\nOffering Amount: $82
+ 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
+ M\nIssue Date: 2026-11-05T00:00:00\nMaturity Date: 2027-05-06T00:00:00
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:6-Week Bill Auction
 DTSTART;VALUE=DATE:20261103
 UID:912797VH7-auction@treasurydirect.gov
 CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797VH7\nSecurity Term: 6-Week\nOffering Amount: TBD\
- nIssue Date: 2026-11-05T00:00:00
+DESCRIPTION:CUSIP: 912797VH7\nSecurity Term: 6-Week\nOffering Amount: $100
+ 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
+ M\nIssue Date: 2026-11-05T00:00:00\nMaturity Date: 2026-12-17T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:17-Week Bill Auction
+DTSTART;VALUE=DATE:20261104
+UID:912797XG7-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797XG7\nSecurity Term: 17-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-11-10T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:4-Week Bill Auction
+DTSTART;VALUE=DATE:20261105
+UID:912797WE3-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WE3\nSecurity Term: 4-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-11-10T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:8-Week Bill Auction
+DTSTART;VALUE=DATE:20261105
+UID:912797WN3-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WN3\nSecurity Term: 8-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-11-10T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:3-Year Note Auction
+DTSTART;VALUE=DATE:20261109
+UID:91282CRW3-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Note
+DESCRIPTION:CUSIP: 91282CRW3\nSecurity Term: 3-Year\nOffering Amount: TBD\
+ nIssue Date: 2026-11-16T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:10-Year Note Auction
+DTSTART;VALUE=DATE:20261110
+UID:91282CRX1-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Note
+DESCRIPTION:CUSIP: 91282CRX1\nSecurity Term: 10-Year\nOffering Amount: TBD
+ \nIssue Date: 2026-11-16T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:30-Year Bond Auction
+DTSTART;VALUE=DATE:20261112
+UID:912810UY2-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bond
+DESCRIPTION:CUSIP: 912810UY2\nSecurity Term: 30-Year\nOffering Amount: TBD
+ \nIssue Date: 2026-11-16T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:13-Week Bill Auction
+DTSTART;VALUE=DATE:20261109
+UID:912797WB9-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WB9\nSecurity Term: 13-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-11-12T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:26-Week Bill Auction
+DTSTART;VALUE=DATE:20261109
+UID:912797UX3-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797UX3\nSecurity Term: 26-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-11-12T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:6-Week Bill Auction
+DTSTART;VALUE=DATE:20261109
+UID:912797TC1-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797TC1\nSecurity Term: 6-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-11-12T00:00:00
 END:VEVENT
 END:VCALENDAR
