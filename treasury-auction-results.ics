@@ -92,49 +92,4 @@ LAST-MODIFIED:20261102T163400Z
 URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
  _20261102_2.pdf
 END:VEVENT
-BEGIN:VEVENT
-SUMMARY:4-Week Bill Result: High Discount Rate 3.910%
-DTSTART;VALUE=DATE:20261029
-DTSTAMP:20261029T000000Z
-UID:912797VZ7-2026-10-29-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bill
-DESCRIPTION:CUSIP: 912797VZ7\nSecurity Term: 4-Week\nHigh Discount Rate: 3
- .910%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 3.976%\nBid
- -to-Cover Ratio: 3.10\nIssue Date: 2026-11-03T00:00:00\nMaturity Date: 202
- 6-12-01T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
- annceresult/press/preanre/2026/R_20261029_1.pdf
-LAST-MODIFIED:20261029T153323Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261029_1.pdf
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:8-Week Bill Result: High Discount Rate 4.020%
-DTSTART;VALUE=DATE:20261029
-DTSTAMP:20261029T000000Z
-UID:912797WH6-2026-10-29-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bill
-DESCRIPTION:CUSIP: 912797WH6\nSecurity Term: 8-Week\nHigh Discount Rate: 4
- .020%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 4.101%\nBid
- -to-Cover Ratio: 2.63\nIssue Date: 2026-11-03T00:00:00\nMaturity Date: 202
- 6-12-29T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
- annceresult/press/preanre/2026/R_20261029_2.pdf
-LAST-MODIFIED:20261029T153410Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261029_2.pdf
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:7-Year Note Result: High Yield 4.894%
-DTSTART;VALUE=DATE:20261029
-DTSTAMP:20261029T000000Z
-UID:91282CRV5-2026-10-29-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Note
-DESCRIPTION:CUSIP: 91282CRV5\nSecurity Term: 7-Year\nHigh Yield: 4.894%\nC
- ompetitive Closing: 01:00 PM Eastern\nBid-to-Cover Ratio: 2.46\nIssue Date
- : 2026-11-02T00:00:00\nMaturity Date: 2033-10-31T00:00:00\nOfficial Result
- s: https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R_
- 20261029_3.pdf
-LAST-MODIFIED:20261029T170321Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261029_3.pdf
-END:VEVENT
 END:VCALENDAR
