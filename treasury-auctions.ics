@@ -2,15 +2,6 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 BEGIN:VEVENT
-SUMMARY:3-Year Note Auction
-DTSTART;VALUE=DATE:20261109
-UID:91282CRW3-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Note
-DESCRIPTION:CUSIP: 91282CRW3\nSecurity Term: 3-Year\nOffering Amount: $580
- 00000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 PM
- \nIssue Date: 2026-11-16T00:00:00\nMaturity Date: 2029-11-15T00:00:00
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:10-Year Note Auction
 DTSTART;VALUE=DATE:20261110
 UID:91282CRX1-auction@treasurydirect.gov
@@ -27,33 +18,6 @@ CATEGORIES:Treasury,Auction,Bond
 DESCRIPTION:CUSIP: 912810UY2\nSecurity Term: 30-Year\nOffering Amount: $25
  000000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 P
  M\nIssue Date: 2026-11-16T00:00:00\nMaturity Date: 2056-11-15T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:13-Week Bill Auction
-DTSTART;VALUE=DATE:20261109
-UID:912797WB9-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WB9\nSecurity Term: 13-Week\nOffering Amount: $95
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-11-12T00:00:00\nMaturity Date: 2027-02-11T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:26-Week Bill Auction
-DTSTART;VALUE=DATE:20261109
-UID:912797UX3-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797UX3\nSecurity Term: 26-Week\nOffering Amount: $82
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-11-12T00:00:00\nMaturity Date: 2027-05-13T00:00:00
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:6-Week Bill Auction
-DTSTART;VALUE=DATE:20261109
-UID:912797TC1-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797TC1\nSecurity Term: 6-Week\nOffering Amount: $100
- 000000000\nCompetitive Closing: 01:00 PM\nNon-Competitive Closing: 12:00 P
- M\nIssue Date: 2026-11-12T00:00:00\nMaturity Date: 2026-12-24T00:00:00
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:17-Week Bill Auction
