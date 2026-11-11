@@ -122,19 +122,4 @@ LAST-MODIFIED:20261104T163301Z
 URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
  _20261104_1.pdf
 END:VEVENT
-BEGIN:VEVENT
-SUMMARY:6-Week Bill Result: High Discount Rate 3.940%
-DTSTART;VALUE=DATE:20261103
-DTSTAMP:20261103T000000Z
-UID:912797VH7-2026-11-03-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bill
-DESCRIPTION:CUSIP: 912797VH7\nSecurity Term: 6-Week\nHigh Discount Rate: 3
- .940%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 4.013%\nBid
- -to-Cover Ratio: 2.88\nIssue Date: 2026-11-05T00:00:00\nMaturity Date: 202
- 6-12-17T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
- annceresult/press/preanre/2026/R_20261103_1.pdf
-LAST-MODIFIED:20261103T163310Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261103_1.pdf
-END:VEVENT
 END:VCALENDAR
