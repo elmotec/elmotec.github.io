@@ -3,6 +3,66 @@ VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 X-WR-CALNAME:U.S. Treasury Auction Results
 BEGIN:VEVENT
+SUMMARY:4-Week Bill Result: High Discount Rate 3.955%
+DTSTART;VALUE=DATE:20261112
+DTSTAMP:20261112T000000Z
+UID:912797WF0-2026-11-12-result@treasurydirect.gov
+CATEGORIES:Treasury,Auction Result,Bill
+DESCRIPTION:CUSIP: 912797WF0\nSecurity Term: 4-Week\nHigh Discount Rate: 3
+ .955%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 4.022%\nBid
+ -to-Cover Ratio: 2.94\nIssue Date: 2026-11-17T00:00:00\nMaturity Date: 202
+ 6-12-15T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
+ annceresult/press/preanre/2026/R_20261112_2.pdf
+LAST-MODIFIED:20261112T163420Z
+URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
+ _20261112_2.pdf
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:8-Week Bill Result: High Discount Rate 4.080%
+DTSTART;VALUE=DATE:20261112
+DTSTAMP:20261112T000000Z
+UID:912797WP8-2026-11-12-result@treasurydirect.gov
+CATEGORIES:Treasury,Auction Result,Bill
+DESCRIPTION:CUSIP: 912797WP8\nSecurity Term: 8-Week\nHigh Discount Rate: 4
+ .080%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 4.163%\nBid
+ -to-Cover Ratio: 2.50\nIssue Date: 2026-11-17T00:00:00\nMaturity Date: 202
+ 7-01-12T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
+ annceresult/press/preanre/2026/R_20261112_1.pdf
+LAST-MODIFIED:20261112T163340Z
+URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
+ _20261112_1.pdf
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:17-Week Bill Result: High Discount Rate 4.225%
+DTSTART;VALUE=DATE:20261112
+DTSTAMP:20261112T000000Z
+UID:912797XH5-2026-11-12-result@treasurydirect.gov
+CATEGORIES:Treasury,Auction Result,Bill
+DESCRIPTION:CUSIP: 912797XH5\nSecurity Term: 17-Week\nHigh Discount Rate: 4
+ .225%\nCompetitive Closing: 01:00 PM Eastern\nInvestment Rate: 4.344%\nBid
+ -to-Cover Ratio: 2.78\nIssue Date: 2026-11-17T00:00:00\nMaturity Date: 202
+ 7-03-16T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
+ annceresult/press/preanre/2026/R_20261112_3.pdf
+LAST-MODIFIED:20261112T180328Z
+URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
+ _20261112_3.pdf
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:30-Year Bond Result: High Yield 5.441%
+DTSTART;VALUE=DATE:20261112
+DTSTAMP:20261112T000000Z
+UID:912810UY2-2026-11-12-result@treasurydirect.gov
+CATEGORIES:Treasury,Auction Result,Bond
+DESCRIPTION:CUSIP: 912810UY2\nSecurity Term: 30-Year\nHigh Yield: 5.441%\n
+ Competitive Closing: 01:00 PM Eastern\nBid-to-Cover Ratio: 2.36\nIssue Dat
+ e: 2026-11-16T00:00:00\nMaturity Date: 2056-11-15T00:00:00\nOfficial Resul
+ ts: https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
+ _20261112_4.pdf
+LAST-MODIFIED:20261112T180421Z
+URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
+ _20261112_4.pdf
+END:VEVENT
+BEGIN:VEVENT
 SUMMARY:10-Year Note Result: High Yield 5.020%
 DTSTART;VALUE=DATE:20261110
 DTSTAMP:20261110T000000Z
@@ -106,20 +166,5 @@ DESCRIPTION:CUSIP: 912797WN3\nSecurity Term: 8-Week\nHigh Discount Rate: 3
 LAST-MODIFIED:20261105T163414Z
 URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
  _20261105_2.pdf
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:17-Week Bill Result: High Discount Rate 4.090%
-DTSTART;VALUE=DATE:20261104
-DTSTAMP:20261104T000000Z
-UID:912797XG7-2026-11-04-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bill
-DESCRIPTION:CUSIP: 912797XG7\nSecurity Term: 17-Week\nHigh Discount Rate: 4
- .090%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 4.204%\nBid
- -to-Cover Ratio: 3.26\nIssue Date: 2026-11-10T00:00:00\nMaturity Date: 202
- 7-03-09T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
- annceresult/press/preanre/2026/R_20261104_1.pdf
-LAST-MODIFIED:20261104T163301Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261104_1.pdf
 END:VEVENT
 END:VCALENDAR
