@@ -137,34 +137,4 @@ LAST-MODIFIED:20261109T163419Z
 URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
  _20261109_2.pdf
 END:VEVENT
-BEGIN:VEVENT
-SUMMARY:4-Week Bill Result: High Discount Rate 3.890%
-DTSTART;VALUE=DATE:20261105
-DTSTAMP:20261105T000000Z
-UID:912797WE3-2026-11-05-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bill
-DESCRIPTION:CUSIP: 912797WE3\nSecurity Term: 4-Week\nHigh Discount Rate: 3
- .890%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 3.956%\nBid
- -to-Cover Ratio: 2.46\nIssue Date: 2026-11-10T00:00:00\nMaturity Date: 202
- 6-12-08T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
- annceresult/press/preanre/2026/R_20261105_1.pdf
-LAST-MODIFIED:20261105T163327Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261105_1.pdf
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:8-Week Bill Result: High Discount Rate 3.975%
-DTSTART;VALUE=DATE:20261105
-DTSTAMP:20261105T000000Z
-UID:912797WN3-2026-11-05-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bill
-DESCRIPTION:CUSIP: 912797WN3\nSecurity Term: 8-Week\nHigh Discount Rate: 3
- .975%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 4.055%\nBid
- -to-Cover Ratio: 2.68\nIssue Date: 2026-11-10T00:00:00\nMaturity Date: 202
- 7-01-05T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
- annceresult/press/preanre/2026/R_20261105_2.pdf
-LAST-MODIFIED:20261105T163414Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261105_2.pdf
-END:VEVENT
 END:VCALENDAR
