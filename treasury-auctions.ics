@@ -2,15 +2,6 @@ BEGIN:VCALENDAR
 VERSION:2.0
 PRODID:-//Treasury Auction Calendar//elmotec.github.io//
 BEGIN:VEVENT
-SUMMARY:6-Week Bill Auction
-DTSTART;VALUE=DATE:20261117
-UID:912797VJ3-auction@treasurydirect.gov
-CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797VJ3\nSecurity Term: 6-Week\nOffering Amount: $100
- 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
- M\nIssue Date: 2026-11-19T00:00:00\nMaturity Date: 2026-12-31T00:00:00
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:20-Year Bond Auction
 DTSTART;VALUE=DATE:20261118
 UID:912810UZ9-auction@treasurydirect.gov
@@ -34,24 +25,27 @@ SUMMARY:17-Week Bill Auction
 DTSTART;VALUE=DATE:20261118
 UID:912797XJ1-auction@treasurydirect.gov
 CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797XJ1\nSecurity Term: 17-Week\nOffering Amount: TBD
- \nIssue Date: 2026-11-24T00:00:00
+DESCRIPTION:CUSIP: 912797XJ1\nSecurity Term: 17-Week\nOffering Amount: $75
+ 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
+ M\nIssue Date: 2026-11-24T00:00:00\nMaturity Date: 2027-03-23T00:00:00
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:4-Week Bill Auction
 DTSTART;VALUE=DATE:20261119
 UID:912797WG8-auction@treasurydirect.gov
 CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WG8\nSecurity Term: 4-Week\nOffering Amount: TBD\
- nIssue Date: 2026-11-24T00:00:00
+DESCRIPTION:CUSIP: 912797WG8\nSecurity Term: 4-Week\nOffering Amount: $115
+ 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
+ M\nIssue Date: 2026-11-24T00:00:00\nMaturity Date: 2026-12-22T00:00:00
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:8-Week Bill Auction
 DTSTART;VALUE=DATE:20261119
 UID:912797WQ6-auction@treasurydirect.gov
 CATEGORIES:Treasury,Auction,Bill
-DESCRIPTION:CUSIP: 912797WQ6\nSecurity Term: 8-Week\nOffering Amount: TBD\
- nIssue Date: 2026-11-24T00:00:00
+DESCRIPTION:CUSIP: 912797WQ6\nSecurity Term: 8-Week\nOffering Amount: $110
+ 000000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 A
+ M\nIssue Date: 2026-11-24T00:00:00\nMaturity Date: 2027-01-19T00:00:00
 END:VEVENT
 BEGIN:VEVENT
 SUMMARY:13-Week Bill Auction
