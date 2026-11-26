@@ -227,34 +227,4 @@ LAST-MODIFIED:20261119T163449Z
 URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
  _20261119_2.pdf
 END:VEVENT
-BEGIN:VEVENT
-SUMMARY:20-Year Bond Result: High Yield 5.459%
-DTSTART;VALUE=DATE:20261118
-DTSTAMP:20261118T000000Z
-UID:912810UZ9-2026-11-18-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bond
-DESCRIPTION:CUSIP: 912810UZ9\nSecurity Term: 20-Year\nHigh Yield: 5.459%\n
- Competitive Closing: 01:00 PM Eastern\nBid-to-Cover Ratio: 2.63\nIssue Dat
- e: 2026-11-30T00:00:00\nMaturity Date: 2046-11-15T00:00:00\nOfficial Resul
- ts: https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261118_2.pdf
-LAST-MODIFIED:20261118T192854Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261118_2.pdf
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:17-Week Bill Result: High Discount Rate 4.230%
-DTSTART;VALUE=DATE:20261118
-DTSTAMP:20261118T000000Z
-UID:912797XJ1-2026-11-18-result@treasurydirect.gov
-CATEGORIES:Treasury,Auction Result,Bill
-DESCRIPTION:CUSIP: 912797XJ1\nSecurity Term: 17-Week\nHigh Discount Rate: 4
- .230%\nCompetitive Closing: 11:30 AM Eastern\nInvestment Rate: 4.350%\nBid
- -to-Cover Ratio: 3.05\nIssue Date: 2026-11-24T00:00:00\nMaturity Date: 202
- 7-03-23T00:00:00\nOfficial Results: https://www.treasurydirect.gov/instit/
- annceresult/press/preanre/2026/R_20261118_1.pdf
-LAST-MODIFIED:20261118T163334Z
-URL:https://www.treasurydirect.gov/instit/annceresult/press/preanre/2026/R
- _20261118_1.pdf
-END:VEVENT
 END:VCALENDAR
