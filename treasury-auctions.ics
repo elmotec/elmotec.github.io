@@ -28,4 +28,76 @@ DESCRIPTION:CUSIP: 912797VT1\nSecurity Term: 6-Week\nOffering Amount: $900
  00000000\nCompetitive Closing: 11:30 AM\nNon-Competitive Closing: 11:00 AM
  \nIssue Date: 2026-12-03T00:00:00\nMaturity Date: 2027-01-14T00:00:00
 END:VEVENT
+BEGIN:VEVENT
+SUMMARY:17-Week Bill Auction
+DTSTART;VALUE=DATE:20261202
+UID:912797XQ5-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797XQ5\nSecurity Term: 17-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-12-08T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:4-Week Bill Auction
+DTSTART;VALUE=DATE:20261203
+UID:912797WN3-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WN3\nSecurity Term: 4-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-12-08T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:8-Week Bill Auction
+DTSTART;VALUE=DATE:20261203
+UID:912797WS2-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WS2\nSecurity Term: 8-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-12-08T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:13-Week Bill Auction
+DTSTART;VALUE=DATE:20261207
+UID:912797WK9-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797WK9\nSecurity Term: 13-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-12-10T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:26-Week Bill Auction
+DTSTART;VALUE=DATE:20261207
+UID:912797VF1-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797VF1\nSecurity Term: 26-Week\nOffering Amount: TBD
+ \nIssue Date: 2026-12-10T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:3-Year Note Auction
+DTSTART;VALUE=DATE:20261207
+UID:91282CSB8-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Note
+DESCRIPTION:CUSIP: 91282CSB8\nSecurity Term: 3-Year\nOffering Amount: TBD\
+ nIssue Date: 2026-12-15T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:6-Week Bill Auction
+DTSTART;VALUE=DATE:20261208
+UID:912797TM9-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bill
+DESCRIPTION:CUSIP: 912797TM9\nSecurity Term: 6-Week\nOffering Amount: TBD\
+ nIssue Date: 2026-12-10T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:9-Year 11-Month Note Auction
+DTSTART;VALUE=DATE:20261208
+UID:91282CRX1-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Note
+DESCRIPTION:CUSIP: 91282CRX1\nSecurity Term: 9-Year 11-Month\nOffering Amo
+ unt: TBD\nIssue Date: 2026-12-15T00:00:00
+END:VEVENT
+BEGIN:VEVENT
+SUMMARY:29-Year 11-Month Bond Auction
+DTSTART;VALUE=DATE:20261210
+UID:912810UY2-auction@treasurydirect.gov
+CATEGORIES:Treasury,Auction,Bond
+DESCRIPTION:CUSIP: 912810UY2\nSecurity Term: 29-Year 11-Month\nOffering Am
+ ount: TBD\nIssue Date: 2026-12-15T00:00:00
+END:VEVENT
 END:VCALENDAR
